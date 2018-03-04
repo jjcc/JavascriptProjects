@@ -1,0 +1,51 @@
+{
+ "name": "flare","id" : 1,
+ "children": [
+  {
+   "name": "analytics","id" : 2,"type":"grp",
+   "children": [
+    {
+     "name": "cluster","id" : 3,"type":"grp",
+     "children": [
+      {"name": "AgglomerativeCluster","id" : 4, "size": 3938,"change":"+2.88"},
+      {"name": "CommunityStructure","id" : 5, "size": 3812,"change":"+2.88"},
+      {"name": "HierarchicalCluster", "id" : 6,"size": 6714,"change":"+2.88"},
+      {"name": "MergeEdge", "id" : 7,"size": 743,"change":"+2.88"}
+     ]
+    },
+    {
+     "name": "graph","type":"grp","id" :8,
+     "children": [
+      {"name": "BetweennessCentrality","id" : 9, "size": 3534,"change":"-8.88"},
+      {"name": "LinkDistance", "id" : 10,"size": 5731,"change":"+2.88"},
+      {"name": "MaxFlowMinCut", "id" : 11,"size": 7840,"change":"+7.88"},
+      {"name": "ShortestPaths","id" : 12, "size": 5914,"change":"+2.88"},
+      {"name": "SpanningTree", "id" : 13,"size": 3416,"change":"+2.88"}
+     ]
+    },
+    {
+     "name": "optimization","id" : 14,"type":"grp",
+     "children": [
+      {"name": "中国人民解放军有很多很多的东西要放", "id" : 15,"size": 7074,"change":"+0.88"}
+     ]
+    }
+   ]
+  },
+  {
+   "name": "display","id" : 16,"type":"grp",
+   "children": [
+    {"name": "DirtySprite","id" : 17, "size": 8833,"change":"+2.88"},
+    {"name": "LineSprite", "id" : 18,"size": 1732,"change":"+1.88"},
+    {"name": "RectSprite", "id" : 19,"size": 3623,"change":"+2.88"},
+    {"name": "TextSprite","id" : 20, "size": 10066,"change":"+8.88"}
+   ]
+  },
+  {
+   "name": "displayNew","type":"grp","id" : 21,
+     "children": [
+    {"name": "DirtySprite", "id" : 22,"size": 8833,"change":"-6.88"}
+	]
+  } 
+  
+ ]
+}

@@ -1,0 +1,224 @@
+{ "name":"tree","type":"root", 
+"children": [
+	{ "name":"电力热力燃气 及水生产和供应业 (D)","type":"grp",
+		"children":
+		[
+		{ "name":"水的生产和供应业","type":"cls","code":"C46",
+		  "children":[
+		   { "name":"兴蓉投资","code":"000598","type":"elm", "size":"303" ,"change":"+2.83%" },
+		   { "name":"首创股份","code":"600008","type":"elm", "size":"370" ,"change":"+4.14%" },
+		   { "name":"重庆水务","code":"601158","type":"elm", "size":"563" ,"change":"+3.62%" }
+		  ]},
+		{ "name":"电力热力生产和供应业","type":"cls","code":"C44",
+		  "children":[
+		   { "name":"深圳能源","code":"000027","type":"elm", "size":"435" ,"change":"+3.39%" },
+		   { "name":"湖北能源","code":"000883","type":"elm", "size":"589" ,"change":"+1.19%" },
+		   { "name":"华能国际","code":"600011","type":"elm", "size":"1570" ,"change":"+0.46%" },
+		   { "name":"浙能电力","code":"600023","type":"elm", "size":"973" ,"change":"+0.12%" },
+		   { "name":"华电国际","code":"600027","type":"elm", "size":"751" ,"change":"+0.59%" },
+		   { "name":"川投能源","code":"600674","type":"elm", "size":"563" ,"change":"+3.68%" },
+		   { "name":"国电电力","code":"600795","type":"elm", "size":"1324" ,"change":"+0.15%" },
+		   { "name":"内蒙华电","code":"600863","type":"elm", "size":"340" ,"change":"+0.69%" },
+		   { "name":"国投电力","code":"600886","type":"elm", "size":"807" ,"change":"+2.06%" },
+		   { "name":"长江电力","code":"600900","type":"elm", "size":"2102" ,"change":"+1.27%" },
+		   { "name":"大唐发电","code":"601991","type":"elm", "size":"1016" ,"change":"+1.87%" }
+		  ]},
+		{ "name":"燃气生产和供应业","type":"cls","code":"C45",
+		  "children":[
+		   { "name":"申能股份","code":"600642","type":"elm", "size":"452" ,"change":"+1.74%" },
+		   { "name":"深圳燃气","code":"601139","type":"elm", "size":"265" ,"change":"+1.41%" }
+		  ]}
+		]},
+
+	{ "name":"信息传输软件和 信息技术服务业(I)","type":"grp",
+		"children":
+		[
+		{ "name":"电信广播电视和卫星传输服务","type":"cls","code":"C63",
+		  "children":[
+		   { "name":"中信国安","code":"000839","type":"elm", "size":"357" ,"change":"+3.17%" },
+		   { "name":"电广传媒","code":"000917","type":"elm", "size":"511" ,"change":"+2.06%" },
+		   { "name":"中国联通","code":"600050","type":"elm", "size":"1835" ,"change":"+2.36%" },
+		   { "name":"百视通","code":"600637","type":"elm", "size":"1003" ,"change":"+2.47%" },
+		   { "name":"吉视传媒","code":"601929","type":"elm", "size":"249" ,"change":"+4.16%" }
+		  ]},
+		{ "name":"互联网和相关服务","type":"cls","code":"C64",
+		  "children":[
+		   { "name":"海虹控股","code":"000503","type":"elm", "size":"554" ,"change":"-0.27%" },
+		   { "name":"鹏博士","code":"600804","type":"elm", "size":"657" ,"change":"-0.30%" },
+		   { "name":"人民网","code":"603000","type":"elm", "size":"376" ,"change":"+2.27%" }
+		  ]},
+		{ "name":"软件和信息技术服务业","type":"cls","code":"C65",
+		  "children":[
+		   { "name":"东华软件","code":"002065","type":"elm", "size":"655" ,"change":"+10.01%" },
+		   { "name":"科大讯飞","code":"002230","type":"elm", "size":"672" ,"change":"-0.80%" },
+		   { "name":"广联达","code":"002410","type":"elm", "size":"415" ,"change":"+8.41%" },
+		   { "name":"国电南瑞","code":"600406","type":"elm", "size":"565" ,"change":"+3.24%" },
+		   { "name":"用友网络","code":"600588","type":"elm", "size":"738" ,"change":"+1.72%" },
+		   { "name":"东软集团","code":"600718","type":"elm", "size":"427" ,"change":"+6.13%" }
+		  ]}
+		]},
+	
+
+	{ "name":"房地产业(K)","type":"grp",
+		"children":
+		[
+		{ "name":"房地产业","type":"cls","code":"C70",
+		  "children":[
+		   { "name":"万 科Ａ","code":"000002","type":"elm", "size":"1563" ,"change":"+0.71%" },
+		   { "name":"招商地产","code":"000024","type":"elm", "size":"823" ,"change":"" },
+		   { "name":"金 融 街","code":"000402","type":"elm", "size":"398" ,"change":"+3.33%" },
+		   { "name":"金科股份","code":"000656","type":"elm", "size":"389" ,"change":"+10.06%" },
+		   { "name":"苏宁环球","code":"000718","type":"elm", "size":"316" ,"change":"+10.00%" },
+		   { "name":"荣盛发展","code":"002146","type":"elm", "size":"402" ,"change":"+1.83%" },
+		   { "name":"保利地产","code":"600048","type":"elm", "size":"1386" ,"change":"+0.78%" },
+		   { "name":"新湖中宝","code":"600208","type":"elm", "size":"702" ,"change":"+5.89%" },
+		   { "name":"华夏幸福","code":"600340","type":"elm", "size":"772" ,"change":"+0.55%" },
+		   { "name":"首开股份","code":"600376","type":"elm", "size":"308" ,"change":"" },
+		   { "name":"金地集团","code":"600383","type":"elm", "size":"629" ,"change":"-0.78%" },
+		   { "name":"城投控股","code":"600649","type":"elm", "size":"216" ,"change":"" },
+		   { "name":"陆家嘴","code":"600663","type":"elm", "size":"921" ,"change":"+0.16%" }
+		  ]}
+		]},
+	{ "name":"交通运输仓储和 邮政业(G)","type":"grp",
+		"children":
+		[
+		{ "name":"水上运输业","type":"cls","code":"C55",
+		  "children":[
+		   { "name":"上港集团","code":"600018","type":"elm", "size":"2250" ,"change":"+5.89%" },
+		   { "name":"宁波港","code":"601018","type":"elm", "size":"1304" ,"change":"+10.04%" },
+		   { "name":"中海集运","code":"601866","type":"elm", "size":"1253" ,"change":"+10.05%" }
+		  ]},
+		{ "name":"铁路运输业","type":"cls","code":"C53",
+		  "children":[
+		   { "name":"大秦铁路","code":"601006","type":"elm", "size":"1874" ,"change":"+0.32%" },
+		   { "name":"广深铁路","code":"601333","type":"elm", "size":"444" ,"change":"+0.32%" }
+		  ]},
+		{ "name":"航空运输业","type":"cls","code":"C56",
+		  "children":[
+		   { "name":"上海机场","code":"600009","type":"elm", "size":"647" ,"change":"+9.99%" },
+		   { "name":"南方航空","code":"600029","type":"elm", "size":"965" ,"change":"+2.08%" },
+		   { "name":"东方航空","code":"600115","type":"elm", "size":"1038" ,"change":"+1.11%" },
+		   { "name":"海南航空","code":"600221","type":"elm", "size":"660" ,"change":"+1.12%" },
+		   { "name":"中国国航","code":"601111","type":"elm", "size":"1519" ,"change":"+3.20%" }
+		  ]}
+		]},
+	
+	{ "name":"农林..(A)综合(S)水利..(N)","type":"grp",
+		"children":
+		[
+		{ "name":"农业","type":"cls","code":"C1",
+		  "children":[
+		   { "name":"亚盛集团","code":"600108","type":"elm", "size":"431" ,"change":"+3.30%" },
+		   { "name":"海南橡胶","code":"601118","type":"elm", "size":"460" ,"change":"+2.99%" }
+		  ]
+		  },
+		{ "name":"综合","type":"cls","code":"C90",
+		  "children":[
+		   { "name":"中国宝安","code":"000009","type":"elm", "size":"323" ,"change":"+1.20%" },
+		   { "name":"鲁信创投","code":"600783","type":"elm", "size":"336" ,"change":"+0.11%" },
+		   { "name":"张江高科","code":"600895","type":"elm", "size":"530" ,"change":"+4.97%" }
+		  ]},
+		{ "name":"公共设施管理业","type":"cls","code":"C78",
+		  "children":[
+		   { "name":"华侨城Ａ","code":"000069","type":"elm", "size":"713" ,"change":"+1.13%" }
+		  ]},
+		{ "name":"生态保护和环境治理业","type":"cls","code":"C77",
+		  "children":[
+		   { "name":"桑德环境","code":"000826","type":"elm", "size":"414" ,"change":"+8.53%" }
+		  ]}		  
+		]},
+	{ "name":"批发和零售业(F)","type":"grp",
+		"children":
+		[
+		{ "name":"零售业","type":"cls","code":"C52",
+		  "children":[
+		   { "name":"华东医药","code":"000963","type":"elm", "size":"319" ,"change":"+5.29%" },
+		   { "name":"苏宁云商","code":"002024","type":"elm", "size":"1465" ,"change":"+5.03%" },
+		   { "name":"豫园商城","code":"600655","type":"elm", "size":"302" ,"change":"+2.24%" },
+		   { "name":"百联股份","code":"600827","type":"elm", "size":"388" ,"change":"+2.69%" },
+		   { "name":"庞大集团","code":"601258","type":"elm", "size":"370" ,"change":"+3.62%" },
+		   { "name":"上海医药","code":"601607","type":"elm", "size":"782" ,"change":"+0.07%" },
+		   { "name":"永辉超市","code":"601933","type":"elm", "size":"468" ,"change":"+1.68%" }
+		  ]},
+		{ "name":"批发业","type":"cls","code":"C51",
+		  "children":[
+		   { "name":"爱施德","code":"002416","type":"elm", "size":"207" ,"change":"" },
+		   { "name":"五矿发展","code":"600058","type":"elm", "size":"310" ,"change":"+3.36%" },
+		   { "name":"建发股份","code":"600153","type":"elm", "size":"483" ,"change":"+4.15%" },
+		   { "name":"山煤国际","code":"600546","type":"elm", "size":"149" ,"change":"+1.89%" },
+		   { "name":"外高桥","code":"600648","type":"elm", "size":"456" ,"change":"+3.56%" },
+		   { "name":"辽宁成大","code":"600739","type":"elm", "size":"511" ,"change":"+3.43%" },
+		   { "name":"九州通","code":"600998","type":"elm", "size":"502" ,"change":"+4.30%" }
+		  ]}
+		]},
+	{ "name":"租赁和商务服务业 (L)","type":"grp",
+		"children":
+		[
+		{ "name":"商务服务业","type":"cls","code":"C72",
+		  "children":[
+		   { "name":"农 产 品","code":"000061","type":"elm", "size":"435" ,"change":"+1.06%" },
+		   { "name":"海宁皮城","code":"002344","type":"elm", "size":"290" ,"change":"+1.49%" },
+		   { "name":"省广股份","code":"002400","type":"elm", "size":"282" ,"change":"-0.92%" },
+		   { "name":"小商品城","code":"600415","type":"elm", "size":"862" ,"change":"+9.77%" },
+		   { "name":"中国国旅","code":"601888","type":"elm", "size":"501" ,"change":"" }
+		  ]}
+		]},
+	{ "name":"文化体育和娱乐 业(R)","type":"grp",
+		"children":
+		[
+		{ "name":"新闻和出版业","type":"cls","code":"C85",
+		  "children":[
+		   { "name":"华闻传媒","code":"000793","type":"elm", "size":"413" ,"change":"-0.25%" },
+		   { "name":"浙报传媒","code":"600633","type":"elm", "size":"322" ,"change":"+3.74%" },
+		   { "name":"博瑞传播","code":"600880","type":"elm", "size":"187" ,"change":"+2.63%" },
+		   { "name":"中南传媒","code":"601098","type":"elm", "size":"507" ,"change":"+4.86%" },
+		   { "name":"凤凰传媒","code":"601928","type":"elm", "size":"547" ,"change":"+10.03%" }
+		  ]},
+		{ "name":"广播电视电影和影视录 音制作业","type":"cls","code":"C86",
+		  "children":[
+		   { "name":"华数传媒","code":"000156","type":"elm", "size":"786" ,"change":"+0.59%" }
+		  ]}
+		]},
+	{ "name":"采矿业(B)","type":"grp",
+		"children":
+		[
+		{ "name":"煤炭开采和洗选业","type":"cls","code":"C6",
+		  "children":[
+		   { "name":"冀中能源","code":"000937","type":"elm", "size":"253" ,"change":"+1.41%" },
+		   { "name":"西山煤电","code":"000983","type":"elm", "size":"279" ,"change":"+1.83%" },
+		   { "name":"兰花科创","code":"600123","type":"elm", "size":"127" ,"change":"+2.01%" },
+		   { "name":"永泰能源","code":"600157","type":"elm", "size":"744" ,"change":"+10.05%" },
+		   { "name":"兖州煤业","code":"600188","type":"elm", "size":"744" ,"change":"+2.79%" },
+		   { "name":"阳泉煤业","code":"600348","type":"elm", "size":"247" ,"change":"+2.49%" },
+		   { "name":"盘江股份","code":"600395","type":"elm", "size":"218" ,"change":"+7.33%" },
+		   { "name":"大有能源","code":"600403","type":"elm", "size":"186" ,"change":"+2.49%" },
+		   { "name":"中国神华","code":"601088","type":"elm", "size":"4103" ,"change":"+0.93%" },
+		   { "name":"陕西煤业","code":"601225","type":"elm", "size":"981" ,"change":"+1.45%" },
+		   { "name":"平煤股份","code":"601666","type":"elm", "size":"163" ,"change":"+1.91%" },
+		   { "name":"潞安环能","code":"601699","type":"elm", "size":"296" ,"change":"+1.90%" },
+		   { "name":"中煤能源","code":"601898","type":"elm", "size":"1080" ,"change":"+1.37%" },
+		   { "name":"国投新集","code":"601918","type":"elm", "size":"274" ,"change":"+9.96%" }
+		  ]},
+		{ "name":"有色金属矿采选业","type":"cls","code":"C9",
+		  "children":[
+		   { "name":"中色股份","code":"000758","type":"elm", "size":"229" ,"change":"+1.30%" },
+		   { "name":"广晟有色","code":"600259","type":"elm", "size":"173" ,"change":"" },
+		   { "name":"中金黄金","code":"600489","type":"elm", "size":"444" ,"change":"+0.53%" },
+		   { "name":"驰宏锌锗","code":"600497","type":"elm", "size":"268" ,"change":"+3.93%" },
+		   { "name":"山东黄金","code":"600547","type":"elm", "size":"430" ,"change":"+0.30%" },
+		   { "name":"西部矿业","code":"601168","type":"elm", "size":"263" ,"change":"+1.01%" },
+		   { "name":"紫金矿业","code":"601899","type":"elm", "size":"1130" ,"change":"" },
+		   { "name":"金钼股份","code":"601958","type":"elm", "size":"450" ,"change":"+0.72%" },
+		   { "name":"洛阳钼业","code":"603993","type":"elm", "size":"793" ,"change":"+0.84%" }
+		  ]},
+		{ "name":"开采辅助活动","type":"cls","code":"C11",
+		  "children":[
+		   { "name":"海油工程","code":"600583","type":"elm", "size":"614" ,"change":"+2.28%" },
+		   { "name":"中海油服","code":"601808","type":"elm", "size":"1257" ,"change":"+1.62%" }
+		  ]},
+		{ "name":"黑色金属矿采选业","type":"cls","code":"C8",
+		  "children":[
+		   { "name":"攀钢钒钛","code":"000629","type":"elm", "size":"424" ,"change":"-0.20%" }
+		  ]}
+		]}
+]}

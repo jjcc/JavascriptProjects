@@ -1,0 +1,218 @@
+<html>
+<head>
+    <title>Treemap with Wrapping and Truncated Labels</title>
+    <meta charset="utf-8">
+    <!-- poor man's browser detection -->
+    <!--[if IE]><script type="text/javascript">window['isIE'] = true;</script><![endif]-->
+    <script src="js/d3.v3.min.js"></script>
+	
+	    <style type="text/css">
+
+body {
+  font-family: "微软雅黑", "黑体";
+  margin: auto;
+  position: relative;
+  padding: 20px;
+  height: 100%;
+}
+ 
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+ 
+.node {
+    border: solid 1px white;
+    line-height: 0.95;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 6px;
+    background-image: -webkit-linear-gradient(top, hsla(0,0%,100%,.3), hsla(0,0%,100%,0));
+    background-image:    -moz-linear-gradient(top, hsla(0,0%,100%,.3), hsla(0,0%,100%,0));
+    background-image:     -ms-linear-gradient(top, hsla(0,0%,100%,.3), hsla(0,0%,100%,0));
+    background-image:      -o-linear-gradient(top, hsla(0,0%,100%,.3), hsla(0,0%,100%,0));
+    background-image:         linear-gradient(top, hsla(0,0%,100%,.3), hsla(0,0%,100%,0)); 
+    text-shadow: -1px -1px 2px hsla(0,0%,100%,0.25),
+        -1px -1px 2px hsla(0,0%,100%,0.25),
+        -1px 1px 2px hsla(0,0%,100%,0.25),
+        1px -1px 2px hsla(0,0%,100%,0.25),
+        -1px 0px 2px hsla(0,0%,100%,0.25),
+        1px 0px 2px hsla(0,0%,100%,0.25);
+}
+
+.node div {
+   padding: 3px 4%;
+}
+#tooltip {
+  position: absolute;
+  width: 220px;
+  height: auto;
+  padding: 10px;
+  background-color: white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+#tooltip.hidden {
+  display: none;
+}	
+
+#ruler { visibility: hidden; white-space: nowrap; }
+		
+    </style>
+	
+</head>
+<body>	
+<span id="ruler"></span>
+
+<script type="text/javascript">
+
+
+
+var width = 1000,
+    height = innerHeight;
+    //color = d3.scale.category20c(),
+    color = function(value) {
+		absValue = value>=0?value*1:value*(-1);
+		if(absValue >10) absValue = 10;
+		 
+		hex = Number(((10-absValue)*255/10).toFixed()).toString(16);
+		if((10-absValue)*255/10<16) hex = "0"+hex;
+		return value >=0? "#ff"+hex+hex:"#"+hex+"ff"+hex;
+	}
+	
+	
+	
+	div = d3.select("body").append("div")
+       .style("position", "relative");
+
+var treemap = d3.layout.treemap()
+    .size([width, height])
+	.ratio([1.3])
+	.padding([24, 4, 4, 4])
+    .sticky(true)
+    .value(function(d) { return Math.log(d.size/10); });
+ 
+var mousemove = function(d) {
+  var xPosition = d3.event.pageX + 25;
+  var yPosition = d3.event.pageY + 5;
+
+  if(d.parent === undefined) return;
+  var pName = "#" + d.parent.code;
+  if(pName != "#tree")
+	d3.select(pName).style("background-color","#ff0");  
+  if(d.type == "cls" ||d.type == "grp"){
+	d3.select("#tooltip")
+		.style("left", xPosition + "px")
+		.style("top", yPosition + "px");
+	d3.select("#tooltip #heading")
+		.text(d.name);
+	d3.select("#tooltip #percentage")
+		.text("");	
+	d3.select("#tooltip #revenue")
+		.text("");		
+	d3.select("#tooltip").classed("hidden", false);
+		return;
+ }
+	
+  var popinfo = "涨跌:" + d.change ;	
+  d3.select("#tooltip")
+    .style("left", xPosition + "px")
+    .style("top", yPosition + "px");
+	d3.select("#tooltip #heading")
+		.text(d.name);
+	d3.select("#tooltip #percentage")
+		.text(popinfo);	
+	d3.select("#tooltip #revenue")
+		.text("市值:" + d.size + "亿");				
+/*      .text(d["demographics"]["Type description"] + "\n" + d["percentage"] + "%");
+  d3.select("#tooltip #revenue")
+    .text("��" + d["revenue"].toFixed(0));*/
+  d3.select("#tooltip").classed("hidden", false);
+  
+  
+  
+};
+
+var mouseout = function(d) {
+  
+  d3.select("#tooltip").classed("hidden", true);
+  if(d.parent === undefined) return;
+  var pName = "#" + d.parent.code;
+  if(pName == "#tree") return;	
+  d3.select(pName).style("background-color","#ddd");  
+
+  
+};
+ 
+function drawTreemap(datFn01) {
+    d3.json(datFn01, function(json) { 
+	//var node = div.datum(tree).selectAll(".node")
+	var node = div.data([json]).selectAll(".node")
+	  .data(treemap.nodes)
+	  .enter().append("div")
+      .attr("class", "node")
+	  .attr("id", function(d){ return d.type == "cls"? d.code:null; })
+      .call(position)
+      .style("background-color", function(d) {
+		if (d.name == 'tree') return "#fff";
+		//var c =  color(d.change.slice(0,-1));
+		return d.type == "cls"? "#ddd":d.type == "grp" ? "#bcf" : color(d.change.slice(0,-1));})
+          //return d.name == 'tree' ? '#fff' : color(d.name); })
+		.on("mousemove", mousemove)
+		.on("mouseout", mouseout)		  
+      .append('div')
+      .style("font-size", function(d) {
+          // compute font size based on sqrt(area)
+          //return Math.max(20, 0.18*Math.sqrt(d.area))+'px'; })
+		   var size = (d.type == "cls"? 12: d.type == "grp"? 14:Math.min(20, 0.40*Math.sqrt(d.area)));  
+			var rsize = (size > 9 && d.dy > 8) ? size + "px":"0px";
+			console.log("rsize:" + rsize);
+			//return size > 6 ? size + "px":"1px"})
+			return rsize})
+	  .style("word-wrap", "break-word")
+      .text(function(d) {
+		if(d.name == "tree") return "";
+		if(d.type == "cls"){
+			var allowed = d.dx/12 - 1;
+			if(allowed >= d.name.length)
+				return d.name;
+			var title = d.name.substring(0,allowed);
+			return title + "..";
+		}
+		return d.name == "tree" ? "" : d.name; })
+	
+	});
+}
+ 
+function position() {
+  console.log("position called");
+  this.style("left", function(d) { return d.x + "px"; })
+      .style("top", function(d) { return d.y + "px"; })
+      .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
+      .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
+}
+
+
+
+</script>
+
+
+<div id="tooltip" class="hidden">
+  <p><strong id="heading"></strong></p>
+  <p><span id="percentage"></span></p>
+  <p><span id="revenue"></span></p>
+</div>
+
+<script type="text/javascript">
+drawTreemap('data/datareal2.json');
+</script>
+
+</body>
+</html>

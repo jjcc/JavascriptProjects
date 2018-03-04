@@ -1,0 +1,60 @@
+{    "name": "tree","type":"root","code":"ffff",
+    "children": [
+        {
+
+
+                    "name": "通讯技术","type":"cls","code":"A1",
+                    "children": [
+                         {"name": "暴风科技", "size": 1,"type":"elm","change":"1.2"},
+                        {"name": "远望谷", "size":3,"type":"elm","change":"3.5"},
+						{"name": "Vsvzia2011", "size":7,"type":"elm","change":"3.2"},
+						{"name": "asvia2011", "size":9,"type":"elm","change":"-3.5"}
+                    ]
+
+			
+        }, 
+		{
+            "name": "金融业","type":"cls","code":"A2",
+            "children": [
+                {"name": "Stricker2012", "size": 5 ,"type":"elm","change":"1.5"},
+                {"name": "Beadle1997", "size": 7,"type":"elm","change":"0.5"}                     
+ 
+			]
+        },
+		{
+			"name": "农林牧副渔","type":"grp",
+			"children": [
+			{
+	 
+						"name": "农业","type":"cls","code":"A3",
+						"children": [
+							{"name": "Bordes2011", "size": 2,"type":"elm","change":"0.5"},
+							{"name": "Hervas2011", "size": 5,"type":"elm","change":"-3.5"},
+							{"name": "Henderson2008", "size": 3,"type":"elm","change":"0.5"}   
+						]
+	 
+			},
+			{
+	 
+						"name": "林业","type":"cls","code":"A4",
+						"children": [
+							{"name": "Cordes2011", "size": 8,"type":"elm","change":"0.5"},
+							{"name": "Lervas2011", "size": 4,"type":"elm","change":"-3.5"},
+							{"name": "Venderson2008", "size": 2,"type":"elm","change":"0.5"}   
+						]
+	 
+			}]
+
+		},
+         {
+	
+			"name": "环保行业","type":"cls","code":"A5",
+			"children": [
+				{"name": "Bühling2012", "size": 6,"type":"elm","change":"3.5"},
+				{"name": "MacWilliams2005", "size": 7,"type":"elm","change":"1.5"},
+				{"name": "Verbelen2011", "size": 1,"type":"elm","change":"2.5"}
+			]
+			}
+	
+	    ]
+}

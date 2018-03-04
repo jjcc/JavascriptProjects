@@ -1,0 +1,17 @@
+{
+    name: "tree",
+    children: [
+        { name: "Word-wrapping comes for free in HTML", size: 16000 ,type:"elm"},
+        { name: "animate makes things fun", size: 8000 ,type:"elm"},
+        { name: "data data everywhere...", size: 5220 ,type:"elm"},
+        { name: "display something beautiful", size: 3623,type:"elm" },
+        { name: "flex your muscles", size: 984 ,type:"elm"},
+        { name: "暴风科技", size: 6410 ,type:"elm"},
+        { name: "query and you get the answer", size:1948,type:"sec",
+			children: [
+			{name:"q1",size: 624 },
+			{name:"q2",size: 1124 }
+			]
+		}
+    ]
+}
