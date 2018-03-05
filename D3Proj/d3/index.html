@@ -4,7 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <title>Financial Data - Shanghai Stock Exchange</title>
     <script type="text/javascript" src="js/modernizr.js" charset="utf-8"></script>
-    <script type="text/javascript" src="js/d3v328.js"></script>
+    <!--<script type="text/javascript" src="js/d3v328.js"></script> -->
+	<script type="text/javascript" src="js/d3v517.min.js"></script> 
     <style type="text/css">
 		html {
 			overflow-y:scroll;
@@ -335,11 +336,11 @@ var mo = function(d) {
             .append("xhtml:body")
             .attr("class", "labelbody")
             .append("div")
-			.style("font-size",function(d) {
+			.style("font-size",function(d, i) {
 				//console.log("name:" + d.name + ",dy:" + d.dy +",dx:" + d.dx + ",y:" + d.y + ",x:" + d.x + ",area:" +d.area);
 				var size = Math.min(40, 0.25*Math.sqrt(d.area));  
 				var rsize = (size > 7 && d.dy > 12) ? size + "px":"7px";
-				//console.log("rsize:" + rsize);
+				console.log("rsize,i:" + rsize + "," + i);
 				return rsize})			
             .attr("class", "label")
             .text(function(d) {
