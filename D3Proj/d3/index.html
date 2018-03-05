@@ -41,7 +41,7 @@
         }
 
         .parent .label {
-            color: #00f;
+            color: #fff;
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
             -webkit-text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
             -moz-text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
@@ -123,11 +123,11 @@
 	}
 	var color2 = d3.scale.category20c();
     var headerHeight = 20;
-    var headerColor = "#bcf";
+    var headerColor = "#04a";
     var transitionDuration = 500;
     var root;
     var node;
-	var clsHdrClr = "#fdd0a2";
+	var clsHdrClr = "#3f9cff";
 
     var treemap = d3.layout.treemap()
 		.ratio([1.3])
@@ -256,7 +256,7 @@ var mo = function(d) {
               return Math.max(0.01, d.dx);
             })
             .attr("height", function(d) { return d.dy; })
-            .style("fill", function(d){ return d.type == "grp" ?"#bcf":clsHdrClr});
+            .style("fill", function(d){ return d.type == "grp" ?"#04a":clsHdrClr});
         parentEnterTransition.append('foreignObject')
             .attr("class", "foreignObject")
             .append("xhtml:body")
@@ -275,7 +275,7 @@ var mo = function(d) {
                 return Math.max(0.01, d.dx);
             })
             .attr("height", function(d) { return d.dy; })
-            .style("fill", function(d){ return d.type=="grp"?"#bcf":d.type=="cls"?clsHdrClr:clsHdrClr});
+            .style("fill", function(d){ return d.type=="grp"?"#04a":d.type=="cls"?clsHdrClr:clsHdrClr});
         parentUpdateTransition.select(".foreignObject")
             .attr("width", function(d) {
 				//console.log("parentUpdateTransition width called once" + d.name);
@@ -317,12 +317,12 @@ var mo = function(d) {
                     .attr("filter", "")
                     .select(".background")
                     .style("stroke", "#FFFFFF");
-				chart.select("g.cell.parent#" + d.parent.name).select("rect").style("fill",function(d){ return d.type=="grp"?"#bcf":clsHdrClr});
+				chart.select("g.cell.parent#" + d.parent.name).select("rect").style("fill",function(d){ return d.type=="grp"?"#04a":clsHdrClr});
             });
         childEnterTransition.append("rect")
             .classed("background", true)
             .style("fill", function(d) {
-                return d.type == "cls"? "#ddd":d.type == "grp" ? "#bcf" : color(d.change.slice(0,-1));
+                return d.type == "cls"? "#ddd":d.type == "grp" ? "#04a" : color(d.change.slice(0,-1));
             });
         childEnterTransition.append('foreignObject')
             .attr("class", "foreignObject")
@@ -503,8 +503,8 @@ var mo = function(d) {
                 return d.children ? (ky*d.dy) : Math.max(0.01, ky * d.dy);
             })
             .style("fill", function(d) {
-                //return d.children ? color2(d.name) : d.type == "cls"? "#ddd":d.type == "grp" ? "#bcf" : color(d.change.slice(0,-1));
-				return  d.type =="root"?"#ffffff":d.type == "cls"? clsHdrClr:d.type == "grp" ? "#bcf" : color(d.change.slice(0,-1));
+                //return d.children ? color2(d.name) : d.type == "cls"? "#ddd":d.type == "grp" ? "#04a" : color(d.change.slice(0,-1));
+				return  d.type =="root"?"#ffffff":d.type == "cls"? clsHdrClr:d.type == "grp" ? "#04a" : color(d.change.slice(0,-1));
 			});
 
         node = d;
