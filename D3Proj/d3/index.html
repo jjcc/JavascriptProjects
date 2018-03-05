@@ -338,7 +338,7 @@ var mo = function(d) {
 			.style("font-size",function(d) {
 				//console.log("name:" + d.name + ",dy:" + d.dy +",dx:" + d.dx + ",y:" + d.y + ",x:" + d.x + ",area:" +d.area);
 				var size = Math.min(40, 0.25*Math.sqrt(d.area));  
-				var rsize = (size > 9 && d.dy > 30) ? size + "px":"0px";
+				var rsize = (size > 7 && d.dy > 12) ? size + "px":"7px";
 				//console.log("rsize:" + rsize);
 				return rsize})			
             .attr("class", "label")
