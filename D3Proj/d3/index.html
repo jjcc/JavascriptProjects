@@ -74,24 +74,24 @@
             cursor: pointer
         }
 		
-#tooltip {
-  position: absolute;
-  width: 220px;
-  height: auto;
-  padding: 10px;
-  background-color: white;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-  pointer-events: none;
-}
+        #tooltip {
+          position: absolute;
+          width: 220px;
+          height: auto;
+          padding: 10px;
+          background-color: white;
+          -webkit-border-radius: 10px;
+          -moz-border-radius: 10px;
+          border-radius: 10px;
+          -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+          -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+          box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+          pointer-events: none;
+        }
 
-#tooltip.hidden {
-  display: none;
-}			
+        #tooltip.hidden {
+          display: none;
+        }			
     </style>
 </head>
 <body>
@@ -325,6 +325,7 @@ var mo = function(d) {
             .style("fill", function(d) {
                 return d.type == "cls"? "#ddd":d.type == "grp" ? "#04a" : color(d.change.slice(0,-1));
             });
+		var rsz = [],sz = [],dy = [],dx = [];			
         childEnterTransition.append('foreignObject')
             .attr("class", "foreignObject")
             .attr("width", function(d) {
@@ -339,11 +340,19 @@ var mo = function(d) {
 			.style("font-size",function(d, i) {
 				//console.log("name:" + d.name + ",dy:" + d.dy +",dx:" + d.dx + ",y:" + d.y + ",x:" + d.x + ",area:" +d.area);
 				var size = Math.min(40, 0.25*Math.sqrt(d.area));  
-				var rsize = (size > 7 && d.dy > 12) ? size + "px":"7px";
-				console.log("rsize,i:" + rsize + "," + i);
-				return rsize})			
+				//var rsize = (size > 7 && d.dy > 12) ? size + "px":"7px";
+				rsize = getFontSize(d.area,d.dy);
+				
+				//console.log("rsize,i:" + rsize + "," + i);
+				rsz.push(rsize);
+				sz.push(size);
+				dy.push(d.dy);
+				dx.push(d.dx);
+				return rsize + "px"})			
             .attr("class", "label")
-            .text(function(d) {
+            .text(function(d,i) {
+				var sq = Math.sqrt(dy[i]*dx[i]);
+				console.log(d.name + "，rsz:" + rsz[i].toFixed(3) + ",sz:" + sz[i].toFixed(3) + ",dy:" + dy[i] + ",dx:" + dx[i] + ",a:" + sq.toFixed(2));			
                 return d.name;
             });
 
@@ -514,6 +523,12 @@ var mo = function(d) {
             d3.event.stopPropagation();
         }
     }
+	
+	function getFontSize(area,dy){
+		var size = Math.min(40, 0.25*Math.sqrt(area));  
+		var rsize = (size > 7 && dy > 12) ? size : 7;
+		return rsize;
+	}
 	
 </script>
 
