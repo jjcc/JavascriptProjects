@@ -1,0 +1,86 @@
+html {
+	overflow-y:scroll;
+}	
+
+ body {
+     overflow: hidden;
+     margin: 0;
+     font-size: 12px;
+     font-family: "Helvetica Neue", Helvetica;
+ }
+
+ .footer {
+     z-index: 1;
+     display: block;
+     font-size: 26px;
+     font-weight: 200;
+     text-shadow: 0 1px 0 #fff;
+ }
+
+ svg {
+     overflow: hidden;
+ }
+
+ rect {
+     pointer-events: all;
+     cursor: pointer;
+     stroke: #EEEEEE;
+ }
+
+ .chart {
+     display: block;
+     margin: auto;
+ }
+
+ 
+ .parent .label {
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  -webkit-text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  -moz-text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+ 	height:15px
+ }
+
+ .labelbody {
+     background: transparent;
+ }
+
+ .label {
+     margin: 2px;
+     white-space: pre;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+     -webkit-text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+     -moz-text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+ }
+
+ .child .label {
+     white-space: pre-wrap;
+     text-align: center;
+     text-overflow: ellipsis;
+ }
+
+ .cell {
+     font-size: 11px;
+     cursor: pointer
+ }
+
+ #tooltip {
+   position: absolute;
+   width: 220px;
+   height: auto;
+   padding: 10px;
+   background-color: white;
+   -webkit-border-radius: 10px;
+   -moz-border-radius: 10px;
+   border-radius: 10px;
+   -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+   -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+   pointer-events: none;
+ }
+
+ #tooltip.hidden {
+   display: none;
+ }			
