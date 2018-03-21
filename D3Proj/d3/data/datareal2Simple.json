@@ -1,0 +1,63 @@
+{ "name":"tree","type":"root", 
+"children": [
+	{ "name":"农林..(A)综合(S)水利..(N)","type":"grp",
+		"children":
+		[
+		{ "name":"公设,生态,农业","type":"cls","code":"C78-77-1",
+		  "children":[
+		   { "name":"华侨城Ａ","code":"000069","type":"elm", "size":"713" ,"change":"+1.13%" },
+		   { "name":"桑德环境","code":"000826","type":"elm", "size":"414" ,"change":"+8.53%" },
+		   { "name":"亚盛集团","code":"600108","type":"elm", "size":"231" ,"change":"+3.30%" },
+		   { "name":"海南橡胶","code":"601118","type":"elm", "size":"460" ,"change":"+2.99%" }
+		  ]},
+		{ "name":"综合","type":"cls","code":"C90",
+		  "children":[
+		   { "name":"中国宝安","code":"000009","type":"elm", "size":"323" ,"change":"+1.20%" },
+		   { "name":"鲁信创投","code":"600783","type":"elm", "size":"336" ,"change":"+0.11%" },
+		   { "name":"张江高科","code":"600895","type":"elm", "size":"530" ,"change":"+4.97%" }
+		  ]}
+		]},
+
+
+	{ "name":"批发和零售业(F)","type":"grp",
+		"children":
+		[
+		{ "name":"零售业","type":"cls","code":"C52",
+		  "children":[
+		   { "name":"华东医药","code":"000963","type":"elm", "size":"319" ,"change":"+5.29%" },
+		   { "name":"苏宁云商","code":"002024","type":"elm", "size":"1465" ,"change":"+5.03%" },
+		   { "name":"豫园商城","code":"600655","type":"elm", "size":"302" ,"change":"+2.24%" },
+		   { "name":"百联股份","code":"600827","type":"elm", "size":"388" ,"change":"+2.69%" },
+		   { "name":"庞大集团","code":"601258","type":"elm", "size":"370" ,"change":"+3.62%" },
+		   { "name":"上海医药","code":"601607","type":"elm", "size":"782" ,"change":"+0.07%" },
+		   { "name":"永辉超市","code":"601933","type":"elm", "size":"468" ,"change":"+1.68%" }
+		  ]},
+		{ "name":"批发业","type":"cls","code":"C51",
+		  "children":[
+		   { "name":"爱施德","code":"002416","type":"elm", "size":"207" ,"change":"" },
+		   { "name":"五矿发展","code":"600058","type":"elm", "size":"310" ,"change":"+3.36%" },
+		   { "name":"建发股份","code":"600153","type":"elm", "size":"483" ,"change":"+4.15%" },
+		   { "name":"山煤国际","code":"600546","type":"elm", "size":"189" ,"change":"+1.89%" },
+		   { "name":"外高桥","code":"600648","type":"elm", "size":"456" ,"change":"+3.56%" },
+		   { "name":"辽宁成大","code":"600739","type":"elm", "size":"511" ,"change":"+3.43%" },
+		   { "name":"九州通","code":"600998","type":"elm", "size":"502" ,"change":"+4.30%" }
+		  ]}
+		]},
+	{ "name":"文化、体育和娱乐 业(R)","type":"grp",
+		"children":
+		[
+		{ "name":"新闻和出版业","type":"cls","code":"C85",
+		  "children":[
+		   { "name":"华闻传媒","code":"000793","type":"elm", "size":"413" ,"change":"-0.25%" },
+		   { "name":"浙报传媒","code":"600633","type":"elm", "size":"322" ,"change":"+3.74%" },
+		   { "name":"博瑞传播","code":"600880","type":"elm", "size":"207" ,"change":"-2.63%" },
+		   { "name":"中南传媒","code":"601098","type":"elm", "size":"507" ,"change":"+4.86%" },
+		   { "name":"凤凰传媒","code":"601928","type":"elm", "size":"547" ,"change":"+10.03%" }
+		  ]},
+		{ "name":"广播、电视、电影和影视录 音制作业","type":"cls","code":"C86",
+		  "children":[
+		   { "name":"华数传媒","code":"000156","type":"elm", "size":"786" ,"change":"+0.59%" }
+		  ]}
+		]}
+
+]}
