@@ -29,7 +29,8 @@
         .size([chartWidth, chartHeight])
         .sticky(true)
         .value(function(d) {
-            return Math.log(d.size/200); 
+            var adjusted = d.size >=210? d.size/200:1.05
+            return Math.log(adjusted); 
         });
 
     var svg = d3.select("#body")
@@ -83,8 +84,11 @@ var mo = function(d) {
 		.style("top", yPosition + "px");
 	d3.select("#tooltip #heading")
 		.text(d.name);
-	d3.select("#tooltip #percentage")
-		.text("");	
+    d3.select("#tooltip #percentage")
+        //.html("<p>"+getGroupText(d)+"</p>");
+        .html( getGroupText(d));
+        //.text(getGroupText(d))
+		//.text("place holder for percentage of cls/grp");	
 	d3.select("#tooltip #revenue")
 		.text("");		
 	d3.select("#tooltip").classed("hidden", false);
@@ -144,7 +148,8 @@ var mo = function(d) {
 			.attr("id",function(d){ return d.name;})
             .on("click", function(d) {
                 zoom(d);
-            });
+            })
+            .on("mousemove",mo);
         parentEnterTransition.append("rect")
             .attr("width", function(d) {
               return Math.max(0.01, d.dx);
@@ -218,7 +223,7 @@ var mo = function(d) {
             .style("fill", function(d) {
                 return d.type == "cls"? "#ddd":d.type == "grp" ? "#04a" : color(d.change.slice(0,-1));
             });
-		var rsz = [],sz = [],dy = [],dx = [];			
+		//var rsz = [],sz = [],dy = [],dx = [];			
         childEnterTransition.append('foreignObject')
             .attr("class", "foreignObject")
             .attr("width", function(d) {
@@ -230,7 +235,7 @@ var mo = function(d) {
             .append("xhtml:body")
             .attr("class", "labelbody")
             .append("div")
-			.style("font-size",function(d, i) {
+			/*.style("font-size",function(d, i) {
 				//console.log("name:" + d.name + ",dy:" + d.dy +",dx:" + d.dx + ",y:" + d.y + ",x:" + d.x + ",area:" +d.area);
 				var size = Math.min(40, 0.25*Math.sqrt(d.area));  
 				//var rsize = (size > 7 && d.dy > 12) ? size + "px":"7px";
@@ -241,10 +246,10 @@ var mo = function(d) {
 				sz.push(size);
 				dy.push(d.dy);
 				dx.push(d.dx);
-				return rsize + "px"})			
+				return rsize + "px"})	*/		
             .attr("class", "label")
             .text(function(d,i) {
-				var sq = Math.sqrt(dy[i]*dx[i]);
+				//var sq = Math.sqrt(dy[i]*dx[i]);
 				//console.log(d.name + "，rsz:" + rsz[i].toFixed(3) + ",sz:" + sz[i].toFixed(3) + ",dy:" + dy[i] + ",dx:" + dx[i] + ",a:" + sq.toFixed(2));			
                 return d.name;
             });
@@ -387,17 +392,29 @@ var mo = function(d) {
             .text(function(d) {
 				//console.log("xx,seting text:" + d.name + ",dy:" + d.dy +",dx:" + d.dx + ",y:" + d.y + ",x:" + d.x + ",area:" +d.area);
                 //console.log("set text:" + d.name);
-                var appended = zoomIn? " ####xx":"";
+                var appended = zoomIn? "#z":"";
                 return d.name + appended;
             });
-        if (zoomIn )
+        if (zoomIn)
             zoomTransition.select(".foreignObject")
-            .select(".labelbody .label")
-            .style("font-size", function(){//"30px");
+            .select(".child .labelbody .label")
+            .style("font-size", function(d){//"30px");
                 var dtype = d.type;
-                console.log("fixed size");
-                return "30px";    
+                console.log("zoomIn, return bigger size");
+                rsize = getFontSize(d.area,d.dy);
+                bigrsize = rsize * 1.8;
+                return bigrsize + "px";    
             });
+
+        if (!zoomIn)
+            zoomTransition.select(".foreignObject")
+            .select(".child .labelbody .label")
+            .style("font-size", function(d){//"30px");
+                var dtype = d.type;
+				rsize = getFontSize(d.area,d.dy);
+                console.log("zoomOut:right size,"+d.area.toPrecision(6) + ","+d.name);
+                return rsize + "px";    
+        });    
 /*		function size(d) {
 			return d.size;
 		}
@@ -431,4 +448,20 @@ var mo = function(d) {
         var rsize = (size > 7 && dy > 12) ? size : 7;
         //console.log("getFontSize:" + rsize);
 		return rsize;
-	}
+    }
+    
+
+    function getGroupText(d){
+        var returnString = ""
+        console.log("in group text:" + d.name);
+        if(d.type == 'cls'){
+            var children = d.children;
+            d.children.map(function f(i){
+                returnString +="<div>" + i.name + "</div>\n"; 
+                //console.log(i.name);
+                });
+
+        }
+        console.log("combined div string:" + returnString);
+        return returnString;//"place holder for g";
+    }
