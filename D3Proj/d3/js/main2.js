@@ -149,7 +149,10 @@ var mo = function(d) {
             .on("click", function(d) {
                 zoom(d);
             })
-            .on("mousemove",mo);
+            .on("mousemove",mo)
+            .on("mouseout", function(d) {
+                d3.select("#tooltip").classed("hidden", true);
+            });
         parentEnterTransition.append("rect")
             .attr("width", function(d) {
               return Math.max(0.01, d.dx);
@@ -317,7 +320,7 @@ var mo = function(d) {
 			
         this.treemap
             //.padding([headerHeight/(chartHeight/d.dy), 4, 4, 4])
-			.padding([20, 1, 1, 1])
+			.padding([18, 1, 1, 1])
             .nodes(d);
 
         // moving the next two lines above treemap layout messes up padding of zoom result
@@ -453,7 +456,7 @@ var mo = function(d) {
 
     function getGroupText(d){
         var returnString = ""
-        console.log("in group text:" + d.name);
+        //console.log("in group text:" + d.name);
         if(d.type == 'cls'){
             var children = d.children;
             d.children.map(function f(i){
@@ -462,6 +465,6 @@ var mo = function(d) {
                 });
 
         }
-        console.log("combined div string:" + returnString);
+        //console.log("combined div string:" + returnString);
         return returnString;//"place holder for g";
     }
