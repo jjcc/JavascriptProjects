@@ -460,7 +460,9 @@ var mo = function(d) {
         if(d.type == 'cls'){
             var children = d.children;
             d.children.map(function f(i){
-                returnString +="<div>" + i.name + "</div>\n"; 
+                returnString +="<div class='stkname'>" + i.name +
+                 "</div><div class='stkname'>(" + i.code + 
+                 ")</div><div class='stkchange'>" + i.change + "</div><div style='clear:both'></div>\n"; 
                 //console.log(i.name);
                 });
 

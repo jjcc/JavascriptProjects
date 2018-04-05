@@ -84,3 +84,12 @@ html {
  #tooltip.hidden {
    display: none;
  }			
+
+ #tooltip .stkname {
+    width:65px;
+    float:left;
+ }
+ #tooltip .stkchange {
+    width:50px;
+    float:left;
+ }
