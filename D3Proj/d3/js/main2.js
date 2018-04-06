@@ -400,7 +400,8 @@ var mo = function(d) {
                 var dtype = d.type;
                 console.log("zoomIn, return bigger size");
                 rsize = getFontSize(d.area,d.dy);
-                bigrsize = rsize * 1.8;
+                bigrsize = Math.min(rsize * 1.5,40);
+
                 return bigrsize + "px";    
             });
             console.log("yes zoomIn,append new div");
@@ -408,8 +409,7 @@ var mo = function(d) {
             .append("div")
             .attr("class","stkatt")
             .html(function(d){
-                var returnString = "<div><a href='http://www.google.com' target='_blank'>" + d.name + "</a></div>";
-                return returnString;    
+                return getAfterZoomContent(d);
             });
         }
 
@@ -476,4 +476,9 @@ var mo = function(d) {
         }
         //console.log("combined div string:" + returnString);
         return returnString;//"place holder for g";
+    }
+
+    function getAfterZoomContent(d){
+            var returnString = "<div><a href='http://www.google.com' target='_blank'>" + d.name + "</a></div>";
+            return returnString;    
     }
