@@ -250,12 +250,7 @@ var mo = function(d) {
 				dy.push(d.dy);
 				dx.push(d.dx);
 				return rsize + "px"})	*/		
-            .attr("class", "label")
-            .text(function(d,i) {
-				//var sq = Math.sqrt(dy[i]*dx[i]);
-				//console.log(d.name + "，rsz:" + rsz[i].toFixed(3) + ",sz:" + sz[i].toFixed(3) + ",dy:" + dy[i] + ",dx:" + dx[i] + ",a:" + sq.toFixed(2));			
-                return d.name;
-            });
+            .attr("class", "label");
 
         if (isIE) {
             childEnterTransition.selectAll(".foreignObject .labelbody .label")
@@ -398,7 +393,7 @@ var mo = function(d) {
                 var appended = zoomIn? "#z":"";
                 return d.name + appended;
             });
-        if (zoomIn)
+        if (zoomIn){
             zoomTransition.select(".foreignObject")
             .select(".child .labelbody .label")
             .style("font-size", function(d){//"30px");
@@ -408,8 +403,17 @@ var mo = function(d) {
                 bigrsize = rsize * 1.8;
                 return bigrsize + "px";    
             });
+            console.log("yes zoomIn,append new div");
+            d3.selectAll(".child").select(".labelbody")
+            .append("div")
+            .attr("class","stkatt")
+            .html(function(d){
+                var returnString = "<div><a href='http://www.google.com' target='_blank'>" + d.name + "</a></div>";
+                return returnString;    
+            });
+        }
 
-        if (!zoomIn)
+        if (!zoomIn){
             zoomTransition.select(".foreignObject")
             .select(".child .labelbody .label")
             .style("font-size", function(d){//"30px");
@@ -417,7 +421,9 @@ var mo = function(d) {
 				rsize = getFontSize(d.area,d.dy);
                 console.log("zoomOut:right size,"+d.area.toPrecision(6) + ","+d.name);
                 return rsize + "px";    
-        });    
+            });
+            d3.selectAll(".stkatt").remove();
+        }    
 /*		function size(d) {
 			return d.size;
 		}
@@ -444,6 +450,7 @@ var mo = function(d) {
         if (d3.event) {
             d3.event.stopPropagation();
         }
+        console.log("zoom function end");
     }
 	
 	function getFontSize(area,dy){
