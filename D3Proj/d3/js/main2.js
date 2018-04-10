@@ -479,6 +479,7 @@ var mo = function(d) {
     }
 
     function getAfterZoomContent(d){
-            var returnString = "<div><a href='http://www.google.com' target='_blank'>" + d.name + "</a></div>";
+            var returnString = "<div style='width:50px;'><a href='http://www.google.com' target='_blank'>" + d.name + "</a></div>";
+            returnString += "<div style='width:50px;'>(" + d.code + ")</div>";
             return returnString;    
     }
