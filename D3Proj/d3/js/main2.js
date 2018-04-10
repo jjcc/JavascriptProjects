@@ -481,5 +481,7 @@ var mo = function(d) {
     function getAfterZoomContent(d){
             var returnString = "<div style='width:50px;'><a href='http://www.google.com' target='_blank'>" + d.name + "</a></div>";
             returnString += "<div style='width:50px;'>(" + d.code + ")</div>";
+            returnString += "<div style='width:50px;'>H:" + d.dy + "</div>";
+            returnString += "<div style='width:50px;'>w:" + d.dx + "</div>";
             return returnString;    
     }
