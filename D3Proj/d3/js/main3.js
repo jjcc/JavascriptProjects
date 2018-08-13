@@ -265,13 +265,6 @@ var mo = function(d) {
         childrenCells.exit()
             .remove();
 
-        d3.select("select").on("change", function() {
-            //console.log("select zoom(node)");
-            treemap.value(this.value == "size" ? size : count)
-                .nodes(root);
-            zoom(node);
-        });
-
         zoom(node);
     });
 
@@ -279,6 +272,7 @@ var mo = function(d) {
  
 
 
+    
     //and another one
     function textHeight(d) {
         var ky = chartHeight / d.dy;
@@ -411,6 +405,8 @@ var mo = function(d) {
         // update the width/height of the rects
         zoomTransition.select("rect")
             .attr("width", function(d) {
+                var newdx = kx *d.dx;
+                console.log("kx,newdx, old dx:" + kx +"," + newdx + "," + d.dx );
                 return Math.max(0.01, kx * d.dx);
             })
             .attr("height", function(d) {
