@@ -200,7 +200,11 @@ var mo = function(d) {
             .append("g")
             .attr("class", "cell child")
             .on("click", function(d) {
-                zoom(node === d.parent ? root : d.parent);
+                //zoom(node === d.parent ? root : d.parent);
+                var chooseRoot = (node === d.parent) || d.big;
+                if (d.big)
+                    d.big = false;
+                zoom(chooseRoot ? root : d);
             })
            .on("mouseover", function(d) {
                 this.parentNode.appendChild(this); // workaround for bringing elements to the front (ie z-index)
@@ -272,7 +276,7 @@ var mo = function(d) {
  
 
 
-    
+
     //and another one
     function textHeight(d) {
         var ky = chartHeight / d.dy;
@@ -306,7 +310,8 @@ var mo = function(d) {
 		//yscale = d3.scale.linear().domain([d.y, d.y+12, d.y+d.dy]).range([0,15, chartHeight]);
 		yscale0 = d3.scale.linear().domain([d.y,d.y+d.dy]).range([0,chartHeight]);
 		yscale1 = d3.scale.linear().domain([d.y, d.y+14]).range([0,14]);
-		yscale2 = d3.scale.linear().domain([d.y+15, d.y+d.dy-2]).range([20, chartHeight-1]);
+		//yscale2 = d3.scale.linear().domain([d.y+15, d.y+d.dy-2]).range([20, chartHeight-1]);
+		yscale2 = d3.scale.linear().domain([d.y, d.y+d.dy-2]).range([0, chartHeight-1]);
 		
 		
         if (node != level) {
@@ -364,6 +369,7 @@ var mo = function(d) {
                 return d.name + appended;
             });
         if (zoomIn){
+            d.big = true;
             zoomTransition.select(".foreignObject")
             .select(".child .labelbody .label")
             .style("font-size", function(d){//"30px");
@@ -406,7 +412,7 @@ var mo = function(d) {
         zoomTransition.select("rect")
             .attr("width", function(d) {
                 var newdx = kx *d.dx;
-                console.log("kx,newdx, old dx:" + kx +"," + newdx + "," + d.dx );
+                //console.log("kx,newdx, old dx:" + kx +"," + newdx + "," + d.dx );
                 return Math.max(0.01, kx * d.dx);
             })
             .attr("height", function(d) {
