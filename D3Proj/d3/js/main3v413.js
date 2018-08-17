@@ -302,7 +302,7 @@ var mo = function(d) {
     function zoom(d) {
 		console.log("zoom once,type:" + d.data.type +",name:" + d.data.name);
 		var zoomIn = false;
-		if(d.type != "root")
+		if(d.data.type != "root")
 			zoomIn = true;
 			
         this.treemap
