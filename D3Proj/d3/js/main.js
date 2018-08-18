@@ -312,7 +312,7 @@ var mo = function(d) {
 			
         this.treemap
             //.padding([headerHeight/(chartHeight/d.dy), 4, 4, 4])
-			.padding([20, 1, 1, 1])
+			.padding([18, 0, 0, 0])
             .nodes(d);
 
         // moving the next two lines above treemap layout messes up padding of zoom result
