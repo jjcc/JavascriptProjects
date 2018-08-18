@@ -83,8 +83,11 @@ var mo = function(d) {
 		.style("top", yPosition + "px");
 	d3.select("#tooltip #heading")
 		.text(d.name);
-	d3.select("#tooltip #percentage")
-		.text("");	
+    d3.select("#tooltip #percentage")
+        //.html("<p>"+getGroupText(d)+"</p>");
+        .html( getGroupText(d));
+        //.text(getGroupText(d))
+		//.text("place holder for percentage of cls/grp");	
 	d3.select("#tooltip #revenue")
 		.text("");		
 	d3.select("#tooltip").classed("hidden", false);
@@ -124,7 +127,7 @@ var mo = function(d) {
     d3.json("data/datareal2.json", function(data) {
 	//d3.json("flare.json", function(data) {
         node = root = data;
-        var nodes = treemap.nodes(root);
+        var nodes = treemap.padding([18,0,0,0]).nodes(root);
 
         var children = nodes.filter(function(d) {
             return !d.children;
@@ -144,6 +147,10 @@ var mo = function(d) {
 			.attr("id",function(d){ return d.name;})
             .on("click", function(d) {
                 zoom(d);
+            })
+            .on("mousemove",mo)
+            .on("mouseout", function(d) {
+                d3.select("#tooltip").classed("hidden", true);
             });
         parentEnterTransition.append("rect")
             .attr("width", function(d) {
@@ -310,10 +317,10 @@ var mo = function(d) {
 		if(d.type != "root")
 			zoomIn = true;
 			
-        this.treemap
+        //this.treemap
             //.padding([headerHeight/(chartHeight/d.dy), 4, 4, 4])
-			.padding([18, 0, 0, 0])
-            .nodes(d);
+			
+        //    .nodes(d);
 
         // moving the next two lines above treemap layout messes up padding of zoom result
         var kx = chartWidth  / d.dx;
@@ -421,4 +428,30 @@ var mo = function(d) {
 		var size = Math.min(40, 0.25*Math.sqrt(area));  
 		var rsize = (size > 7 && dy > 12) ? size : 7;
 		return rsize;
-	}
+    }
+    
+
+    function getGroupText(d){
+        var returnString = ""
+        //console.log("in group text:" + d.name);
+        if(d.type == 'cls'){
+            var children = d.children;
+            d.children.map(function f(i){
+                returnString +="<div class='stkname'>" + i.name +
+                 "</div><div class='stkname'>(" + i.code + 
+                 ")</div><div class='stkchange'>" + i.change + "</div><div style='clear:both'></div>\n"; 
+                //console.log(i.name);
+                });
+
+        }
+        //console.log("combined div string:" + returnString);
+        return returnString;//"place holder for g";
+    }
+
+    function getAfterZoomContent(d){
+            var returnString = "<div style='width:50px;'><a href='http://www.google.com' target='_blank'>" + d.name + "</a></div>";
+            returnString += "<div style='width:50px;'>(" + d.code + ")</div>";
+            returnString += "<div style='width:50px;'>H:" + d.dy + "</div>";
+            returnString += "<div style='width:50px;'>w:" + d.dx + "</div>";
+            return returnString;    
+    }
