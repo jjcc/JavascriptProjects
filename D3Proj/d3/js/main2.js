@@ -313,10 +313,10 @@ var mo = function(d) {
 		if(d.type != "root")
 			zoomIn = true;
 			
-        this.treemap
+        //this.treemap
             //.padding([headerHeight/(chartHeight/d.dy), 4, 4, 4])
 			//.padding([18, 0, 0, 0])
-            .nodes(d);
+            //.nodes(d);
 
         // moving the next two lines above treemap layout messes up padding of zoom result
         var kx = chartWidth  / d.dx;
