@@ -128,7 +128,7 @@ var mo = function(d) {
     d3.json("data/datareal2Simple.json", function(data) {
 	//d3.json("flare.json", function(data) {
         node = root = data;
-        var nodes = treemap.padding([18,0,0,1]).nodes(root);
+        var nodes = treemap.padding([18,0,0,0]).nodes(root);
 
         var children = nodes.filter(function(d) {
             return !d.children;
