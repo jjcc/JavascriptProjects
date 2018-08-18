@@ -411,9 +411,15 @@ var mo = function(d) {
             .html(function(d){
                 return getAfterZoomContent(d);
             });
+            //d3.select("svg")
+            //.attr("width", chartWidth/1.3)
+            //.attr("height", chartHeight/1.3);
         }
 
         if (!zoomIn){
+            //d3.select("svg")
+            //.attr("width", chartWidth)
+            //.attr("height", chartHeight);
             zoomTransition.select(".foreignObject")
             .select(".child .labelbody .label")
             .style("font-size", function(d){//"30px");
