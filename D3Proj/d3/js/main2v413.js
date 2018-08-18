@@ -77,7 +77,7 @@ var mo = function(d) {
   var yPosition = d3.event.pageY + 5;
 
   if(d.parent === undefined) return;
-  var pName = "#" + d.parent.data.code;
+  //var pName = "#" + d.parent.data.code;
  
   if(d.type == "cls" ||d.type == "grp"){
 	d3.select("#tooltip")
@@ -126,7 +126,7 @@ var mo = function(d) {
 */		
 
 
-    d3.json("data/datareal3Simple.json", function(data) {
+    d3.json("data/datareal2Simple.json", function(data) {
 	//d3.json("flare.json", function(data) {
         node = root = data;
 
@@ -137,7 +137,6 @@ var mo = function(d) {
                     return Math.log(adjusted); 
                 });
         node = root;
-        //treemap.padding([18, 0, 0, 0]);
         var nodes = treemap(root).descendants();
 
         var children = nodes.filter(function(d) {
@@ -212,11 +211,7 @@ var mo = function(d) {
             .append("g")
             .attr("class", "cell child")
             .on("click", function(d) {
-                //zoom(node === d.parent ? root : d.parent);
-                var chooseRoot = (node === d.parent) || d.big;
-                if (d.big)
-                    d.big = false;
-                zoom(chooseRoot ? root : d);
+                zoom(node === d.parent ? root : d.parent);
             })
            .on("mouseover", function(d) {
                 this.parentNode.appendChild(this); // workaround for bringing elements to the front (ie z-index)
@@ -281,6 +276,13 @@ var mo = function(d) {
         childrenCells.exit()
             .remove();
 
+        d3.select("select").on("change", function() {
+            //console.log("select zoom(node)");
+            treemap.value(this.value == "size" ? size : count)
+                .nodes(root);
+            zoom(node);
+        });
+
         zoom(node);
     });
 
@@ -297,6 +299,24 @@ var mo = function(d) {
     }
 
 
+    function getRGBComponents (color) {
+        var r = color.substring(1, 3);
+        var g = color.substring(3, 5);
+        var b = color.substring(5, 7);
+        return {
+            R: parseInt(r, 16),
+            G: parseInt(g, 16),
+            B: parseInt(b, 16)
+        };
+    }
+
+
+    function idealTextColor (bgColor) {
+        var nThreshold = 105;
+        var components = getRGBComponents(bgColor);
+        var bgDelta = (components.R * 0.299) + (components.G * 0.587) + (components.B * 0.114);
+        return ((255 - bgDelta) < nThreshold) ? "#000000" : "#ffffff";
+    }
 
 
 
@@ -309,7 +329,8 @@ var mo = function(d) {
 			
         //this.treemap
             //.padding([headerHeight/(chartHeight/(d.y1-d.y0)), 4, 4, 4])
-			//.padding([18, 1, 1, 1])
+            //.padding([18, 1, 1, 1])
+            //.paddingTop(30);
 
         // moving the next two lines above treemap layout messes up padding of zoom result
         var kx = chartWidth  / (d.x1 - d.x0);
@@ -321,8 +342,7 @@ var mo = function(d) {
 		//yscale = d3.scale.linear().domain([d.y, d.y+12, d.y+(d.y1-d.y0)]).range([0,15, chartHeight]);
 		yscale0 = d3.scaleLinear().domain([d.y0, d.y1]).range([0,chartHeight]);
 		yscale1 = d3.scaleLinear().domain([d.y0, d.y0+14]).range([0,14]);
-		//yscale2 = d3.scale.linear().domain([d.y+15, d.y+(d.y1-d.y0)-2]).range([20, chartHeight-1]);
-		yscale2 = d3.scaleLinear().domain([d.y0, d.y1-2]).range([0, chartHeight-1]);
+		yscale2 = d3.scaleLinear().domain([d.y0+15, d.y1-2]).range([20, chartHeight-1]);
 		
 		
         if (node != level) {
