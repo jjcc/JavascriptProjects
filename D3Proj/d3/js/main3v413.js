@@ -386,7 +386,8 @@ var mo = function(d) {
             .style("font-size", function(d){//"30px");
                 var dtype = d.type;
                 console.log("zoomIn, return bigger size");
-                rsize = getFontSize(d.area,(d.y1-d.y0));
+                var area = (d.x1-d.x0)*(d.y1 - d.y0);
+                rsize = getFontSize(area,(d.y1-d.y0));
                 bigrsize = Math.min(rsize * 1.5,40);
 
                 return bigrsize + "px";    
@@ -405,7 +406,9 @@ var mo = function(d) {
             .select(".child .labelbody .label")
             .style("font-size", function(d){//"30px");
                 var dtype = d.data.type;
-				rsize = getFontSize(d.value,(d.y1-d.y0));
+                var dy = d.y1-d.y0;
+                var area = (d.x1-d.x0)* dy;
+				rsize = getFontSize(area,dy);
                 //console.log("zoomOut:right size,"+d.area.toPrecision(6) + ","+d.name);
                 return rsize + "px";    
             });
