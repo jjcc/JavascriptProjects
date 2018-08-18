@@ -95,7 +95,7 @@
             .attr("class", "cell parent")
 			.attr("id",function(d){ return d.name;})
             .on("click", function(d) {
-                zoom(d);
+                zoom(d,chartWidth,chartHeight);
             })
             .on("mousemove",mo)
             .on("mouseout", function(d) {
@@ -148,7 +148,7 @@
             .append("g")
             .attr("class", "cell child")
             .on("click", function(d) {
-                zoom(node === d.parent ? root : d.parent);
+                zoom(node === d.parent ? root : d.parent,chartWidth,chartHeight);
             })
            .on("mouseover", function(d) {
                 this.parentNode.appendChild(this); // workaround for bringing elements to the front (ie z-index)
@@ -217,10 +217,10 @@
             //console.log("select zoom(node)");
             treemap.value(this.value == "size" ? size : count)
                 .nodes(root);
-            zoom(node);
+            zoom(node,chartWidth,chartHeight);
         });
 
-        zoom(node);
+        zoom(node,chartWidth,chartHeight);
     });
 
     
@@ -279,8 +279,8 @@
               return value >=0? "#ff"+hex+hex:"#"+hex+"ff"+hex;
           }
       */		
-       
-
+    
+      
     //and another one
     function textHeight(d) {
         var ky = chartHeight / d.dy;
@@ -309,7 +309,7 @@
     }
 
 
-    function zoom(d) {
+    function zoom(d, chartWidth,chartHeight) {
 		console.log("zoom once,type:" + d.type +",name:" + d.name);
 		var zoomIn = false;
 		if(d.type != "root")
