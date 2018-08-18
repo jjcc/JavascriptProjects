@@ -128,7 +128,7 @@ var mo = function(d) {
     d3.json("data/datareal3Simple.json", function(data) {
 	//d3.json("flare.json", function(data) {
         node = root = data;
-        var nodes = treemap.nodes(root);
+        var nodes = treemap.padding([18, 1, 1, 1]).nodes(root);
 
         var children = nodes.filter(function(d) {
             return !d.children;
@@ -295,9 +295,9 @@ var mo = function(d) {
 		if(d.type != "root")
 			zoomIn = true;
 			
-        this.treemap
+        //this.treemap
             //.padding([headerHeight/(chartHeight/d.dy), 4, 4, 4])
-			.padding([18, 1, 1, 1])
+			//.padding([18, 1, 1, 1])
 
         // moving the next two lines above treemap layout messes up padding of zoom result
         var kx = chartWidth  / d.dx;
