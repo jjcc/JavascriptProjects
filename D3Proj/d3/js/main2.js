@@ -1,4 +1,4 @@
-   var isIE = false;//BrowserDetect.browser == 'Explorer';
+    var isIE = false;//BrowserDetect.browser == 'Explorer';
     var chartWidth = 600;//860;
     var chartHeight = 480;//580;
     var xscale = d3.scale.linear().range([0, chartWidth]);
@@ -70,62 +70,10 @@
         .attr("in", "SourceGraphic")
         .attr("in2", "blurOut")
         .attr("mode", "normal");
-	
-var mo = function(d) {
-  var xPosition = d3.event.pageX + 25;
-  var yPosition = d3.event.pageY + 5;
 
-  if(d.parent === undefined) return;
-  var pName = "#" + d.parent.code;
- 
-  if(d.type == "cls" ||d.type == "grp"){
-	d3.select("#tooltip")
-		.style("left", xPosition + "px")
-		.style("top", yPosition + "px");
-	d3.select("#tooltip #heading")
-		.text(d.name);
-    d3.select("#tooltip #percentage")
-        //.html("<p>"+getGroupText(d)+"</p>");
-        .html( getGroupText(d));
-        //.text(getGroupText(d))
-		//.text("place holder for percentage of cls/grp");	
-	d3.select("#tooltip #revenue")
-		.text("");		
-	d3.select("#tooltip").classed("hidden", false);
-		return;
- }
-	
-  var popinfo = "涨跌:" + d.change ;	
-  d3.select("#tooltip")
-    .style("left", xPosition + "px")
-    .style("top", yPosition + "px");
-	d3.select("#tooltip #heading")
-		.text(d.name);
-	d3.select("#tooltip #percentage")
-		.text(popinfo);	
-	d3.select("#tooltip #revenue")
-		.text("市值:" + d.size + "亿");				
-/*      .text(d["demographics"]["Type description"] + "\n" + d["percentage"] + "%");
-  d3.select("#tooltip #revenue")
-    .text("��" + d["revenue"].toFixed(0));*/
-  d3.select("#tooltip").classed("hidden", false);
-  
-  
-  
-};
-    
-/*	color = function(value) {
-		absValue = value>=0?value*1:value*(-1);
-		if(absValue >10) absValue = 10;
-		 
-		hex = Number(((10-absValue)*255/10).toFixed()).toString(16);
-		if((10-absValue)*255/10<16) hex = "0"+hex;
-		return value >=0? "#ff"+hex+hex:"#"+hex+"ff"+hex;
-	}
-*/		
+    function visualize(dataInput) {
 
-
-    d3.json("data/datareal2Simple.json", function(data) {
+    d3.json(dataInput, function(data) {
 	//d3.json("flare.json", function(data) {
         node = root = data;
         var nodes = treemap.padding([18,0,0,0]).nodes(root);
@@ -275,9 +223,63 @@ var mo = function(d) {
         zoom(node);
     });
 
+    
+    }//end of visialize
 
- 
-
+	
+    var mo = function(d) {
+        var xPosition = d3.event.pageX + 25;
+        var yPosition = d3.event.pageY + 5;
+      
+        if(d.parent === undefined) return;
+        var pName = "#" + d.parent.code;
+       
+        if(d.type == "cls" ||d.type == "grp"){
+          d3.select("#tooltip")
+              .style("left", xPosition + "px")
+              .style("top", yPosition + "px");
+          d3.select("#tooltip #heading")
+              .text(d.name);
+          d3.select("#tooltip #percentage")
+              //.html("<p>"+getGroupText(d)+"</p>");
+              .html( getGroupText(d));
+              //.text(getGroupText(d))
+              //.text("place holder for percentage of cls/grp");	
+          d3.select("#tooltip #revenue")
+              .text("");		
+          d3.select("#tooltip").classed("hidden", false);
+              return;
+       }
+          
+        var popinfo = "涨跌:" + d.change ;	
+        d3.select("#tooltip")
+          .style("left", xPosition + "px")
+          .style("top", yPosition + "px");
+          d3.select("#tooltip #heading")
+              .text(d.name);
+          d3.select("#tooltip #percentage")
+              .text(popinfo);	
+          d3.select("#tooltip #revenue")
+              .text("市值:" + d.size + "亿");				
+      /*      .text(d["demographics"]["Type description"] + "\n" + d["percentage"] + "%");
+        d3.select("#tooltip #revenue")
+          .text("��" + d["revenue"].toFixed(0));*/
+        d3.select("#tooltip").classed("hidden", false);
+        
+        
+        
+      };
+          
+      /*	color = function(value) {
+              absValue = value>=0?value*1:value*(-1);
+              if(absValue >10) absValue = 10;
+               
+              hex = Number(((10-absValue)*255/10).toFixed()).toString(16);
+              if((10-absValue)*255/10<16) hex = "0"+hex;
+              return value >=0? "#ff"+hex+hex:"#"+hex+"ff"+hex;
+          }
+      */		
+       
 
     //and another one
     function textHeight(d) {
@@ -491,3 +493,9 @@ var mo = function(d) {
             returnString += "<div style='width:50px;'>w:" + d.dx + "</div>";
             return returnString;    
     }
+
+
+    exports = {
+        visualize: visualize,
+    };
+    
