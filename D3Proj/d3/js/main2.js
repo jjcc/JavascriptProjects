@@ -15,7 +15,7 @@
 			console.log("Wrong!");
 		return c;
 	}
-	var color2 = d3.scale.category20c();
+	//var color2 = d3.scale.category20c();
     var headerHeight = 20;
     var headerColor = "#04a";
     var transitionDuration = 500;
@@ -40,38 +40,39 @@
 
     var chart = svg.append("svg:g");
 
-    var defs = svg.append("defs");
-
-    var filter = defs.append("svg:filter")
-        .attr("id", "outerDropShadow")
-        .attr("x", "-20%")
-        .attr("y", "-20%")
-        .attr("width", "140%")
-        .attr("height", "140%");
-
-    filter.append("svg:feOffset")
-        .attr("result", "offOut")
-        .attr("in", "SourceGraphic")
-        .attr("dx", "1")
-        .attr("dy", "1");
-
-    filter.append("svg:feColorMatrix")
-        .attr("result", "matrixOut")
-        .attr("in", "offOut")
-        .attr("type", "matrix")
-        .attr("values", "1 0 0 0 0 0 0.1 0 0 0 0 0 0.1 0 0 0 0 0 .5 0");
-
-    filter.append("svg:feGaussianBlur")
-        .attr("result", "blurOut")
-        .attr("in", "matrixOut")
-        .attr("stdDeviation", "3");
-
-    filter.append("svg:feBlend")
-        .attr("in", "SourceGraphic")
-        .attr("in2", "blurOut")
-        .attr("mode", "normal");
-
+ 
     function visualize(dataInput) {
+        var defs = svg.append("defs");
+
+        var filter = defs.append("svg:filter")
+            .attr("id", "outerDropShadow")
+            .attr("x", "-20%")
+            .attr("y", "-20%")
+            .attr("width", "140%")
+            .attr("height", "140%");
+    
+        filter.append("svg:feOffset")
+            .attr("result", "offOut")
+            .attr("in", "SourceGraphic")
+            .attr("dx", "1")
+            .attr("dy", "1");
+    
+        filter.append("svg:feColorMatrix")
+            .attr("result", "matrixOut")
+            .attr("in", "offOut")
+            .attr("type", "matrix")
+            .attr("values", "1 0 0 0 0 0 0.1 0 0 0 0 0 0.1 0 0 0 0 0 .5 0");
+    
+        filter.append("svg:feGaussianBlur")
+            .attr("result", "blurOut")
+            .attr("in", "matrixOut")
+            .attr("stdDeviation", "3");
+    
+        filter.append("svg:feBlend")
+            .attr("in", "SourceGraphic")
+            .attr("in2", "blurOut")
+            .attr("mode", "normal");
+    
 
     d3.json(dataInput, function(data) {
 	//d3.json("flare.json", function(data) {
