@@ -41,217 +41,218 @@
         .attr("height", chartHeight);
 
     var chart = svg.append("svg:g");
+    function visualize(dataInput) {
+		var defs = svg.append("defs");
 
-    var defs = svg.append("defs");
+		var filter = defs.append("svg:filter")
+			.attr("id", "outerDropShadow")
+			.attr("x", "-20%")
+			.attr("y", "-20%")
+			.attr("width", "140%")
+			.attr("height", "140%");
 
-    var filter = defs.append("svg:filter")
-        .attr("id", "outerDropShadow")
-        .attr("x", "-20%")
-        .attr("y", "-20%")
-        .attr("width", "140%")
-        .attr("height", "140%");
+		filter.append("svg:feOffset")
+			.attr("result", "offOut")
+			.attr("in", "SourceGraphic")
+			.attr("dx", "1")
+			.attr("dy", "1");
 
-    filter.append("svg:feOffset")
-        .attr("result", "offOut")
-        .attr("in", "SourceGraphic")
-        .attr("dx", "1")
-        .attr("dy", "1");
+		filter.append("svg:feColorMatrix")
+			.attr("result", "matrixOut")
+			.attr("in", "offOut")
+			.attr("type", "matrix")
+			.attr("values", "1 0 0 0 0 0 0.1 0 0 0 0 0 0.1 0 0 0 0 0 .5 0");
 
-    filter.append("svg:feColorMatrix")
-        .attr("result", "matrixOut")
-        .attr("in", "offOut")
-        .attr("type", "matrix")
-        .attr("values", "1 0 0 0 0 0 0.1 0 0 0 0 0 0.1 0 0 0 0 0 .5 0");
+		filter.append("svg:feGaussianBlur")
+			.attr("result", "blurOut")
+			.attr("in", "matrixOut")
+			.attr("stdDeviation", "3");
 
-    filter.append("svg:feGaussianBlur")
-        .attr("result", "blurOut")
-        .attr("in", "matrixOut")
-        .attr("stdDeviation", "3");
+		filter.append("svg:feBlend")
+			.attr("in", "SourceGraphic")
+			.attr("in2", "blurOut")
+			.attr("mode", "normal");
+		
+	 
+	/*	color = function(value) {
+			absValue = value>=0?value*1:value*(-1);
+			if(absValue >10) absValue = 10;
+			 
+			hex = Number(((10-absValue)*255/10).toFixed()).toString(16);
+			if((10-absValue)*255/10<16) hex = "0"+hex;
+			return value >=0? "#ff"+hex+hex:"#"+hex+"ff"+hex;
+		}
+	*/		
+		console.log("Before loading data..");
 
-    filter.append("svg:feBlend")
-        .attr("in", "SourceGraphic")
-        .attr("in2", "blurOut")
-        .attr("mode", "normal");
-	
- 
-/*	color = function(value) {
-		absValue = value>=0?value*1:value*(-1);
-		if(absValue >10) absValue = 10;
-		 
-		hex = Number(((10-absValue)*255/10).toFixed()).toString(16);
-		if((10-absValue)*255/10<16) hex = "0"+hex;
-		return value >=0? "#ff"+hex+hex:"#"+hex+"ff"+hex;
-	}
-*/		
-	console.log("Before loading data..");
-
-    d3.json("data/datareal2Simple.json").then(function(data) {
-		console.log("Loading data..");
-	//d3.json("flare.json", function(data) {
-        node = root = data;
-
-
-        root = d3.hierarchy(data, (d) => d.children)
-            .sum(function(d) {
-                    var adjusted = d.size >=210? d.size/200:1.05
-                    var val = Math.log(adjusted);
-					if (d.type != "elm")
-						val = 0;
-					console.log("code:" + d.code + ",value:" +val);
-					return val;
-                });
-        node = root;
-        var nodes = treemap(root).descendants();
-
-        var children = nodes.filter(function(d) {
-            return !d.children;
-        });
-        var parents = nodes.filter(function(d) {
-            return d.children;
-        });
-
-        // create parent cells
-        var parentCells = chart.selectAll("g.cell.parent")
-            .data(parents, function(d) {
-                return "p-" + d.name;
-            });
-        var parentEnterTransition = parentCells.enter()
-            .append("g")
-            .attr("class", "cell parent")
-			.attr("id",function(d){ return d.data.name;})
-            .on("click", function(d) {
-                zoom(d,chartWidth,chartHeight);
-            })
-            .on("mousemove",mo)
-            .on("mouseout", function(d) {
-                d3.select("#tooltip").classed("hidden", true);
-            });
-        parentEnterTransition.append("rect")
-            .attr("width", function(d) {
-              return Math.max(0.01, (d.x1-d.x0));
-            })
-            .attr("height", function(d) { return (d.y1-d.y0); })
-            .style("fill", function(d){ return d.type == "grp" ?"#04a":clsHdrClr});
-        parentEnterTransition.append('foreignObject')
-            .attr("class", "foreignObject")
-            .append("xhtml:body")
-            .attr("class", "labelbody")
-            .append("div")
-            .attr("class", "label");
-        // update transition
-        var parentUpdateTransition = parentCells.transition().duration(transitionDuration);
-        parentUpdateTransition.select(".cell")
-            .attr("transform", function(d) {
-                console.log("parentUpdateTransition");
-                var tr = "translate(" + (d.x1-d.x0) + "," + d.y0 + ")";
-                console.log(tr);
-                return tr;
-            });
-        parentUpdateTransition.select("rect")
-            .attr("width", function(d) {
-                return Math.max(0.01, (d.x1-d.x0));
-            })
-            .attr("height", function(d) { return (d.y1-d.y0); })
-            .style("fill", function(d){ return d.type=="grp"?"#04a":d.type=="cls"?clsHdrClr:clsHdrClr});
-        parentUpdateTransition.select(".foreignObject")
-            .attr("width", function(d) {
-				//console.log("parentUpdateTransition width called once" + d.name);
-                return Math.max(0.01, (d.x1-d.x0));
-            })
-            .attr("height", function(d) { return (d.y1-d.y0); })
-            .select(".labelbody .label")
-			.style("font-size","6px");
-        // remove transition
-        parentCells.exit()
-            .remove();
-
-        // create children cells
-        var childrenCells = chart.selectAll("g.cell.child")
-            .data(children, function(d) {
-                return "c-" + d.name;
-            });
-        // enter transition
-        var childEnterTransition = childrenCells.enter()
-            .append("g")
-            .attr("class", "cell child")
-            .on("click", function(d) {
-                zoom(node === d.parent ? root : d.parent, chartWidth,chartHeight);
-            })
-           .on("mouseover", function(d) {
-                this.parentNode.appendChild(this); // workaround for bringing elements to the front (ie z-index)
-                d3.select(this)
-                    .attr("filter", "url(#outerDropShadow)")
-                    .select(".background")
-                    .style("stroke", "#000000");
-					//highlight the parent id
-					chart.select("g.cell.parent#" + d.parent.name).select("rect").style("fill","#40f");
-				
-			})
-			.on("mousemove", mo)
-            .on("mouseout", function(d) {
-				d3.select("#tooltip").classed("hidden", true);
-                d3.select(this)
-                    .attr("filter", "")
-                    .select(".background")
-                    .style("stroke", "#FFFFFF");
-				chart.select("g.cell.parent#" + d.parent.name).select("rect").style("fill",function(d){ return d.type=="grp"?"#04a":clsHdrClr});
-            });
-        childEnterTransition.append("rect")
-            .classed("background", true)
-            .style("fill", function(d) {
-                return d.data.type == "cls"? "#ddd":d.data.type == "grp" ? "#04a" : color(d.data.change.slice(0,-1));
-            });
-		//var rsz = [],sz = [],dy = [],dx = [];			
-        childEnterTransition.append('foreignObject')
-            .attr("class", "foreignObject")
-            .attr("width", function(d) {
-                return Math.max(0.01, (d.x1-d.x0));
-            })
-            .attr("height", function(d) {
-                return Math.max(0.01, (d.y1-d.y0));
-            })
-            .append("xhtml:body")
-            .attr("class", "labelbody")
-            .append("div")
-			/*.style("font-size",function(d, i) {
-				//console.log("name:" + d.name + ",dy:" + (d.y1-d.y0) +",dx:" + (d.x1-d.x0) + ",y:" + d.y + ",x:" + d.x + ",area:" +d.area);
-				var size = Math.min(40, 0.25*Math.sqrt(d.area));  
-				//var rsize = (size > 7 && (d.y1-d.y0) > 12) ? size + "px":"7px";
-				rsize = getFontSize(d.area,(d.y1-d.y0));
-				
-				//console.log("rsize,i:" + rsize + "," + i);
-				rsz.push(rsize);
-				sz.push(size);
-				dy.push((d.y1-d.y0));
-				dx.push((d.x1-d.x0));
-				return rsize + "px"})	*/		
-            .attr("class", "label");
-
-        if (isIE) {
-            childEnterTransition.selectAll(".foreignObject .labelbody .label")
-                .style("display", "true");
-        } else {
-            childEnterTransition.selectAll(".foreignObject")
-                .style("display", "true");
-        }
+		d3.json(dataInput).then(function(data) {
+			console.log("Loading data..");
+		//d3.json("flare.json", function(data) {
+			node = root = data;
 
 
-        // exit transition
-        childrenCells.exit()
-            .remove();
+			root = d3.hierarchy(data, (d) => d.children)
+				.sum(function(d) {
+						var adjusted = d.size >=210? d.size/200:1.05
+						var val = Math.log(adjusted);
+						if (d.type != "elm")
+							val = 0;
+						console.log("code:" + d.code + ",value:" +val);
+						return val;
+					});
+			node = root;
+			var nodes = treemap(root).descendants();
 
-        d3.select("select").on("change", function() {
-            //console.log("select zoom(node)");
-            treemap.value(this.value == "size" ? size : count)
-                .nodes(root);
-            zoom(node,chartWidth,chartHeight);
-        });
+			var children = nodes.filter(function(d) {
+				return !d.children;
+			});
+			var parents = nodes.filter(function(d) {
+				return d.children;
+			});
 
-        zoom(node,chartWidth,chartHeight);
-    });
+			// create parent cells
+			var parentCells = chart.selectAll("g.cell.parent")
+				.data(parents, function(d) {
+					return "p-" + d.name;
+				});
+			var parentEnterTransition = parentCells.enter()
+				.append("g")
+				.attr("class", "cell parent")
+				.attr("id",function(d){ return d.data.name;})
+				.on("click", function(d) {
+					zoom(d,chartWidth,chartHeight);
+				})
+				.on("mousemove",mo)
+				.on("mouseout", function(d) {
+					d3.select("#tooltip").classed("hidden", true);
+				});
+			parentEnterTransition.append("rect")
+				.attr("width", function(d) {
+				  return Math.max(0.01, (d.x1-d.x0));
+				})
+				.attr("height", function(d) { return (d.y1-d.y0); })
+				.style("fill", function(d){ return d.type == "grp" ?"#04a":clsHdrClr});
+			parentEnterTransition.append('foreignObject')
+				.attr("class", "foreignObject")
+				.append("xhtml:body")
+				.attr("class", "labelbody")
+				.append("div")
+				.attr("class", "label");
+			// update transition
+			var parentUpdateTransition = parentCells.transition().duration(transitionDuration);
+			parentUpdateTransition.select(".cell")
+				.attr("transform", function(d) {
+					console.log("parentUpdateTransition");
+					var tr = "translate(" + (d.x1-d.x0) + "," + d.y0 + ")";
+					console.log(tr);
+					return tr;
+				});
+			parentUpdateTransition.select("rect")
+				.attr("width", function(d) {
+					return Math.max(0.01, (d.x1-d.x0));
+				})
+				.attr("height", function(d) { return (d.y1-d.y0); })
+				.style("fill", function(d){ return d.type=="grp"?"#04a":d.type=="cls"?clsHdrClr:clsHdrClr});
+			parentUpdateTransition.select(".foreignObject")
+				.attr("width", function(d) {
+					//console.log("parentUpdateTransition width called once" + d.name);
+					return Math.max(0.01, (d.x1-d.x0));
+				})
+				.attr("height", function(d) { return (d.y1-d.y0); })
+				.select(".labelbody .label")
+				.style("font-size","6px");
+			// remove transition
+			parentCells.exit()
+				.remove();
+
+			// create children cells
+			var childrenCells = chart.selectAll("g.cell.child")
+				.data(children, function(d) {
+					return "c-" + d.name;
+				});
+			// enter transition
+			var childEnterTransition = childrenCells.enter()
+				.append("g")
+				.attr("class", "cell child")
+				.on("click", function(d) {
+					zoom(node === d.parent ? root : d.parent, chartWidth,chartHeight);
+				})
+			   .on("mouseover", function(d) {
+					this.parentNode.appendChild(this); // workaround for bringing elements to the front (ie z-index)
+					d3.select(this)
+						.attr("filter", "url(#outerDropShadow)")
+						.select(".background")
+						.style("stroke", "#000000");
+						//highlight the parent id
+						chart.select("g.cell.parent#" + d.parent.name).select("rect").style("fill","#40f");
+					
+				})
+				.on("mousemove", mo)
+				.on("mouseout", function(d) {
+					d3.select("#tooltip").classed("hidden", true);
+					d3.select(this)
+						.attr("filter", "")
+						.select(".background")
+						.style("stroke", "#FFFFFF");
+					chart.select("g.cell.parent#" + d.parent.name).select("rect").style("fill",function(d){ return d.type=="grp"?"#04a":clsHdrClr});
+				});
+			childEnterTransition.append("rect")
+				.classed("background", true)
+				.style("fill", function(d) {
+					return d.data.type == "cls"? "#ddd":d.data.type == "grp" ? "#04a" : color(d.data.change.slice(0,-1));
+				});
+			//var rsz = [],sz = [],dy = [],dx = [];			
+			childEnterTransition.append('foreignObject')
+				.attr("class", "foreignObject")
+				.attr("width", function(d) {
+					return Math.max(0.01, (d.x1-d.x0));
+				})
+				.attr("height", function(d) {
+					return Math.max(0.01, (d.y1-d.y0));
+				})
+				.append("xhtml:body")
+				.attr("class", "labelbody")
+				.append("div")
+				/*.style("font-size",function(d, i) {
+					//console.log("name:" + d.name + ",dy:" + (d.y1-d.y0) +",dx:" + (d.x1-d.x0) + ",y:" + d.y + ",x:" + d.x + ",area:" +d.area);
+					var size = Math.min(40, 0.25*Math.sqrt(d.area));  
+					//var rsize = (size > 7 && (d.y1-d.y0) > 12) ? size + "px":"7px";
+					rsize = getFontSize(d.area,(d.y1-d.y0));
+					
+					//console.log("rsize,i:" + rsize + "," + i);
+					rsz.push(rsize);
+					sz.push(size);
+					dy.push((d.y1-d.y0));
+					dx.push((d.x1-d.x0));
+					return rsize + "px"})	*/		
+				.attr("class", "label");
+
+			if (isIE) {
+				childEnterTransition.selectAll(".foreignObject .labelbody .label")
+					.style("display", "true");
+			} else {
+				childEnterTransition.selectAll(".foreignObject")
+					.style("display", "true");
+			}
 
 
- var mo = function(d) {
+			// exit transition
+			childrenCells.exit()
+				.remove();
+
+			d3.select("select").on("change", function() {
+				//console.log("select zoom(node)");
+				treemap.value(this.value == "size" ? size : count)
+					.nodes(root);
+				zoom(node,chartWidth,chartHeight);
+			});
+
+			zoom(node,chartWidth,chartHeight);
+		});
+	};
+
+
+  var mo = function(d) {
   var xPosition = d3.event.pageX + 25;
   var yPosition = d3.event.pageY + 5;
 

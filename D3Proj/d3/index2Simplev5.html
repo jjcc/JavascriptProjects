@@ -19,7 +19,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container" >
-        <a class="navbar-brand" href="#">Main stock and index graph</a>
+        <a class="navbar-brand" href="#">Main stock and index graph(d3v5.min.js/main2v5.js/datareal2simple.js)</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -56,7 +56,9 @@
 </div>
 
 <script type="text/javascript" src="js/main2v5.js"></script> 
-
+<script type="text/javascript" >
+    visualize("data/datareal2Simple.json");
+</script> 
 <div id="tooltip" class="hidden">
   <p><strong id="heading"></strong></p>
   <p><span id="percentage"></span></p>
