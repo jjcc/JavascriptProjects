@@ -25,7 +25,7 @@
 
     var treemap = d3.treemap()
 		//.ratio([1.3])
-		.tile(d3.treemapSquarify.ratio(1.5))
+		.tile(d3.treemapResquarify.ratio(1.8))
         .round(true)
         .size([chartWidth, chartHeight])
         .paddingTop(18);
@@ -73,49 +73,7 @@
         .attr("in2", "blurOut")
         .attr("mode", "normal");
 	
-var mo = function(d) {
-  var xPosition = d3.event.pageX + 25;
-  var yPosition = d3.event.pageY + 5;
-
-  if(d.parent === undefined) return;
-  //var pName = "#" + d.parent.data.code;
  
-  if(d.type == "cls" ||d.type == "grp"){
-	d3.select("#tooltip")
-		.style("left", xPosition + "px")
-		.style("top", yPosition + "px");
-	d3.select("#tooltip #heading")
-		.text(d.data.name);
-    d3.select("#tooltip #percentage")
-        //.html("<p>"+getGroupText(d)+"</p>");
-        .html( getGroupText(d));
-        //.text(getGroupText(d))
-		//.text("place holder for percentage of cls/grp");	
-	d3.select("#tooltip #revenue")
-		.text("");		
-	d3.select("#tooltip").classed("hidden", false);
-		return;
- }
-	
-  var popinfo = "涨跌:" + d.data.change ;	
-  d3.select("#tooltip")
-    .style("left", xPosition + "px")
-    .style("top", yPosition + "px");
-	d3.select("#tooltip #heading")
-		.text(d.data.name);
-	d3.select("#tooltip #percentage")
-		.text(popinfo);	
-	d3.select("#tooltip #revenue")
-		.text("市值:" + d.data.size + "亿");				
-/*      .text(d["demographics"]["Type description"] + "\n" + d["percentage"] + "%");
-  d3.select("#tooltip #revenue")
-    .text("��" + d["revenue"].toFixed(0));*/
-  d3.select("#tooltip").classed("hidden", false);
-  
-  
-  
-};
-    
 /*	color = function(value) {
 		absValue = value>=0?value*1:value*(-1);
 		if(absValue >10) absValue = 10;
@@ -293,7 +251,49 @@ var mo = function(d) {
     });
 
 
+ var mo = function(d) {
+  var xPosition = d3.event.pageX + 25;
+  var yPosition = d3.event.pageY + 5;
+
+  if(d.parent === undefined) return;
+  //var pName = "#" + d.parent.data.code;
  
+  if(d.data.type == "cls" ||d.data.type == "grp"){
+	d3.select("#tooltip")
+		.style("left", xPosition + "px")
+		.style("top", yPosition + "px");
+	d3.select("#tooltip #heading")
+		.text(d.data.name);
+    d3.select("#tooltip #percentage")
+        //.html("<p>"+getGroupText(d)+"</p>");
+        .html( getGroupText(d));
+        //.text(getGroupText(d))
+		//.text("place holder for percentage of cls/grp");	
+	d3.select("#tooltip #revenue")
+		.text("");		
+	d3.select("#tooltip").classed("hidden", false);
+		return;
+ }
+	
+  var popinfo = "涨跌:" + d.data.change ;	
+  d3.select("#tooltip")
+    .style("left", xPosition + "px")
+    .style("top", yPosition + "px");
+	d3.select("#tooltip #heading")
+		.text(d.data.name);
+	d3.select("#tooltip #percentage")
+		.text(popinfo);	
+	d3.select("#tooltip #revenue")
+		.text("市值:" + d.data.size + "亿");				
+/*      .text(d["demographics"]["Type description"] + "\n" + d["percentage"] + "%");
+  d3.select("#tooltip #revenue")
+    .text("��" + d["revenue"].toFixed(0));*/
+  d3.select("#tooltip").classed("hidden", false);
+  
+  
+  
+};
+   
 
 
 
@@ -493,7 +493,7 @@ var mo = function(d) {
     function getGroupText(d){
         var returnString = ""
         //console.log("in group text:" + d.name);
-        if(d.type == 'cls'){
+        if(d.data.type == 'cls'){
             var children = d.children;
             d.children.map(function f(i){
                 returnString +="<div class='stkname'>" + i.data.name +
