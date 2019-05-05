@@ -315,7 +315,7 @@
 		var zoomIn = false;
 		if(d.type != "root")
 			zoomIn = true;
-			
+		var upOffset = 18;		
         //this.treemap
             //.padding([headerHeight/(chartHeight/d.dy), 4, 4, 4])
 			//.padding([18, 0, 0, 0])
@@ -324,7 +324,9 @@
         // moving the next two lines above treemap layout messes up padding of zoom result
         var kx = chartWidth  / d.dx;
         var ky = chartHeight / d.dy;
-        var level = d;
+        var kyParent = ky;
+		var level = d;
+		
 
         xscale.domain([d.x, d.x + d.dx]);
         yscale.domain([d.y, d.y + d.dy]);
@@ -332,7 +334,15 @@
 		yscale0 = d3.scale.linear().domain([d.y,d.y+d.dy]).range([0,chartHeight]);
 		yscale1 = d3.scale.linear().domain([d.y, d.y+14]).range([0,14]);
 		yscale2 = d3.scale.linear().domain([d.y+15, d.y+d.dy-2]).range([20, chartHeight-1]);
-		
+		if (zoomIn) {
+
+			var vHeight = (chartHeight - 20) *d.dy/(d.dy - 18);
+			kyParent = chartHeight / d.dy;
+			ky = (chartHeight - 20)/(d.dy - upOffset);
+			yscale0 = d3.scale.linear().domain([d.y,d.y+d.dy]).range([0,chartHeight]);
+			yscale2 = d3.scale.linear().domain([d.y + upOffset , d.y+d.dy]).range([20, chartHeight]);
+			yscale1 = d3.scale.linear().domain([d.y, d.y+d.dy]).range([-20, chartHeight+60]);
+		}
 		
         if (node != level) {
             if (isIE) {
@@ -346,9 +356,11 @@
 
         var zoomTransition = chart.selectAll("g.cell").transition().duration(transitionDuration)
             .attr("transform", function(d) {
-				var realdy = yscale0(d.y);
-				if(d.type == "elm")
-					realdy = (d.y - d.parent.y) < 15? yscale1(d.y):yscale2(d.y);
+                var realdy = yscale0(d.y);
+                if(d.type == "elm"){
+						realdy = (d.y - d.parent.y) < upOffset? yscale1(d.y):yscale2(d.y);
+				}
+				
                 return "translate(" + xscale(d.x) + "," + realdy + ")";
             })
             .each("end", function(d, i) {
@@ -447,7 +459,7 @@
                 return Math.max(0.01, kx * d.dx);
             })
             .attr("height", function(d) {
-                return d.children ? (ky*d.dy) : Math.max(0.01, ky * d.dy);
+                return d.children ? (kyParent*d.dy) : Math.max(0.01, ky * d.dy);
             })
             .style("fill", function(d) {
                 //return d.children ? color2(d.name) : d.type == "cls"? "#ddd":d.type == "grp" ? "#04a" : color(d.change.slice(0,-1));
