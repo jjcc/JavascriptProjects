@@ -338,7 +338,7 @@
             .style("font-size", function(d){//"30px");
                 var dtype = d.type;
 				rsize = getFontSize(d.area,d.dy);
-                console.log("zoomOut:right size,"+d.area.toPrecision(6) + ","+d.name);
+                //console.log("zoomOut:right size,"+d.area.toPrecision(6) + ","+d.name);
                 return rsize + "px";    
             });
             d3.selectAll(".stkatt").remove();

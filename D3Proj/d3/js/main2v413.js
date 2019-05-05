@@ -25,6 +25,7 @@
 
     var treemap = d3.treemap()
 		//.ratio([1.3])
+		.tile(d3.treemapSquarify.ratio(1.5))
         .round(true)
         .size([chartWidth, chartHeight])
         .paddingTop(18);
@@ -160,7 +161,7 @@ var mo = function(d) {
             .attr("class", "cell parent")
 			.attr("id",function(d){ return d.data.name;})
             .on("click", function(d) {
-                zoom(d);
+                zoom(d,chartWidth,chartHeight);
             })
             .on("mousemove",mo)
             .on("mouseout", function(d) {
@@ -215,7 +216,7 @@ var mo = function(d) {
             .append("g")
             .attr("class", "cell child")
             .on("click", function(d) {
-                zoom(node === d.parent ? root : d.parent);
+                zoom(node === d.parent ? root : d.parent, chartWidth,chartHeight);
             })
            .on("mouseover", function(d) {
                 this.parentNode.appendChild(this); // workaround for bringing elements to the front (ie z-index)
@@ -284,10 +285,10 @@ var mo = function(d) {
             //console.log("select zoom(node)");
             treemap.value(this.value == "size" ? size : count)
                 .nodes(root);
-            zoom(node);
+            zoom(node,chartWidth,chartHeight);
         });
 
-        zoom(node);
+        zoom(node,chartWidth,chartHeight);
     });
 
 
@@ -325,12 +326,12 @@ var mo = function(d) {
 
 
 
-    function zoom(d) {
+    function zoom(d, chartWidth,chartHeight) {
 		console.log("zoom once,type:" + d.data.type +",name:" + d.data.name);
 		var zoomIn = false;
 		if(d.data.type != "root")
 			zoomIn = true;
-			
+		var upOffset = 18;		
         //this.treemap
             //.padding([headerHeight/(chartHeight/(d.y1-d.y0)), 4, 4, 4])
             //.padding([18, 1, 1, 1])
@@ -339,7 +340,8 @@ var mo = function(d) {
         // moving the next two lines above treemap layout messes up padding of zoom result
         var kx = chartWidth  / (d.x1 - d.x0);
         var ky = chartHeight / (d.y1 - d.y0);
-        var level = d;
+        var kyParent = ky;
+		var level = d;
 
         xscale.domain([d.x0, d.x1]);
         yscale.domain([d.y0, d.y1]);
@@ -347,7 +349,15 @@ var mo = function(d) {
 		yscale0 = d3.scaleLinear().domain([d.y0, d.y1]).range([0,chartHeight]);
 		yscale1 = d3.scaleLinear().domain([d.y0, d.y0+14]).range([0,14]);
 		yscale2 = d3.scaleLinear().domain([d.y0+15, d.y1-2]).range([20, chartHeight-1]);
-		
+		if (zoomIn) {
+
+			var vHeight = (chartHeight - 20) *(d.y1 - d.y0)/((d.y1 - d.y0) - 18);
+			kyParent = chartHeight / (d.y1 - d.y0);
+			ky = (chartHeight - 20)/((d.y1 - d.y0) - upOffset);
+			yscale0 = d3.scaleLinear().domain([d.y0,d.y1]).range([0,chartHeight]);
+			yscale2 = d3.scaleLinear().domain([d.y0 + upOffset , d.y1]).range([20, chartHeight]);
+			yscale1 = d3.scaleLinear().domain([d.y0, d.y1]).range([-20, chartHeight+60]);
+		}
 		
         if (node != level) {
             if (isIE) {
