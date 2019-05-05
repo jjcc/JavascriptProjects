@@ -134,7 +134,11 @@ var mo = function(d) {
         root = d3.hierarchy(data, (d) => d.children)
             .sum(function(d) {
                     var adjusted = d.size >=210? d.size/200:1.05
-                    return Math.log(adjusted); 
+                    var val = Math.log(adjusted);
+					if (d.type != "elm")
+						val = 0;
+					console.log("code:" + d.code + ",value:" +val);
+					return val;
                 });
         node = root;
         var nodes = treemap(root).descendants();
@@ -431,7 +435,7 @@ var mo = function(d) {
                 var dy = d.y1-d.y0;
                 var area = (d.x1-d.x0)* dy;
 				rsize = getFontSize(area,dy);
-                //console.log("zoomOut:right size,"+d.area.toPrecision(6) + ","+d.name);
+                console.log("zoomOut:right size,"+ area.toPrecision(6) + ","+d.name);
                 return rsize + "px";    
             });
             d3.selectAll(".stkatt").remove();
