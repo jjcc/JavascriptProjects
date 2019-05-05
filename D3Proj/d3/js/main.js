@@ -252,7 +252,7 @@ var mo = function(d) {
             .attr("class", "label")
             .text(function(d,i) {
 				var sq = Math.sqrt(dy[i]*dx[i]);
-				console.log(d.name + "，rsz:" + rsz[i].toFixed(3) + ",sz:" + sz[i].toFixed(3) + ",dy:" + dy[i] + ",dx:" + dx[i] + ",a:" + sq.toFixed(2));			
+				//console.log(d.name + "，rsz:" + rsz[i].toFixed(3) + ",sz:" + sz[i].toFixed(3) + ",dy:" + dy[i] + ",dx:" + dx[i] + ",a:" + sq.toFixed(2));			
                 return d.name;
             });
 
@@ -312,7 +312,7 @@ var mo = function(d) {
 
 
     function zoom(d) {
-		//console.log("zoom once,type:" + d.type +",name:" + d.name);
+		console.log("zoom once,type:" + d.type +",name:" + d.name);
 		var zoomIn = false;
 		if(d.type != "root")
 			zoomIn = true;
@@ -393,17 +393,36 @@ var mo = function(d) {
             .select(".labelbody .label")
             .text(function(d) {
 				//console.log("xx,seting text:" + d.name + ",dy:" + d.dy +",dx:" + d.dx + ",y:" + d.y + ",x:" + d.x + ",area:" +d.area);
-				//console.log("set text:" + d.name);
-                return d.name;
+                //console.log("set text:" + d.name);
+                var appended = zoomIn? " ####xx":"";
+                return d.name + appended;
             });
-		function size(d) {
+        if (zoomIn && d.type == 'elm')
+            zoomTransition.select(".foreignObject")
+            .select(".labelbody .label")
+            .style("font-size", function(){//"30px");
+                var dtype = d.type;
+                console.log("zoomIn:fixed size");
+                return "30px";    
+            });
+        if (zoomOut){
+            zoomTransition.select(".foreignObject")
+            .select(".labelbody .label")
+            .style("font-size", function(){//"30px");
+                var dtype = d.type;
+				rsize = getFontSize(d.area,d.dy);
+                console.log("zoomOut:Not fixed size");
+                return rsize + "px";    
+        });
+
+/*		function size(d) {
 			return d.size;
 		}
 
 
 		function count(d) {
 			return 1;
-		}
+		}*/
         // update the width/height of the rects
         zoomTransition.select("rect")
             .attr("width", function(d) {
@@ -426,7 +445,8 @@ var mo = function(d) {
 	
 	function getFontSize(area,dy){
 		var size = Math.min(40, 0.25*Math.sqrt(area));  
-		var rsize = (size > 7 && dy > 12) ? size : 7;
+        var rsize = (size > 7 && dy > 12) ? size : 7;
+        //console.log("getFontSize:" + rsize);
 		return rsize;
     }
     
