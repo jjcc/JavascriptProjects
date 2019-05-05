@@ -222,7 +222,7 @@
 		var zoomIn = false;
 		if(d.type != "root")
 			zoomIn = true;
-			
+		var upOffset = 18;		
         //this.treemap
             //.padding([headerHeight/(chartHeight/d.dy), 4, 4, 4])
 			//.padding([18, 0, 0, 0])
@@ -235,26 +235,19 @@
 		var level = d;
 		
 
-	    xscale.domain([d.x, d.x + d.dx]);
+        xscale.domain([d.x, d.x + d.dx]);
         yscale.domain([d.y, d.y + d.dy]);
 		//yscale = d3.scale.linear().domain([d.y, d.y+12, d.y+d.dy]).range([0,15, chartHeight]);
+		yscale0 = d3.scale.linear().domain([d.y,d.y+d.dy]).range([0,chartHeight]);
 		yscale1 = d3.scale.linear().domain([d.y, d.y+14]).range([0,14]);
-		if (!zoomIn){
-			console.log("scale2:zoomOut");
-			yscale0 = d3.scale.linear().domain([d.y,d.y+d.dy]).range([0,chartHeight]);
-			yscale2 = d3.scale.linear().domain([d.y+15, d.y+d.dy-2]).range([20, chartHeight-1]);
-		}
-		else{
-			var upOffset = 0;//-18;
+		yscale2 = d3.scale.linear().domain([d.y+15, d.y+d.dy-2]).range([20, chartHeight-1]);
+		if (zoomIn) {
+
 			var vHeight = (chartHeight - 20) *d.dy/(d.dy - 18);
-			//ky = vHeight / d.dy;
 			kyParent = chartHeight / d.dy;
-			ky = (chartHeight - 20)/(d.dy - 18);
-			
-			
-			console.log("scale2:zoomIn");
+			ky = (chartHeight - 20)/(d.dy - upOffset);
 			yscale0 = d3.scale.linear().domain([d.y,d.y+d.dy]).range([0,chartHeight]);
-			yscale2 = d3.scale.linear().domain([d.y + 18 , d.y+d.dy]).range([20, chartHeight]);
+			yscale2 = d3.scale.linear().domain([d.y + upOffset , d.y+d.dy]).range([20, chartHeight]);
 			yscale1 = d3.scale.linear().domain([d.y, d.y+d.dy]).range([-20, chartHeight+60]);
 		}
 		
@@ -272,14 +265,7 @@
             .attr("transform", function(d) {
                 var realdy = yscale0(d.y);
                 if(d.type == "elm"){
-					var temp = (d.y - d.parent.y);
-					//console.log("elm:" + d.name +",(d.y - d.parent.y)=" + temp +",x,y:" + d.x + "," + realdy);
-					if(!zoomIn)
-						realdy = (d.y - d.parent.y) < 15? yscale1(d.y):yscale2(d.y);
-					else
-						realdy = (d.y - d.parent.y) < 18? yscale1(d.y):yscale2(d.y);
-				}else{
-					console.log("type:" + d.type + ",name:" + d.name +",x,y:" + d.x + "," + realdy );
+						realdy = (d.y - d.parent.y) < upOffset? yscale1(d.y):yscale2(d.y);
 				}
 				
                 return "translate(" + xscale(d.x) + "," + realdy + ")";
@@ -320,7 +306,6 @@
                 var appended = zoomIn? "#z":"";
                 return d.name + appended;
             });
-			
         if (zoomIn){
             zoomTransition.select(".foreignObject")
             .select(".child .labelbody .label")
