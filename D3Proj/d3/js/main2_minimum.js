@@ -231,7 +231,9 @@
         // moving the next two lines above treemap layout messes up padding of zoom result
         var kx = chartWidth  / d.dx;
         var ky = chartHeight / d.dy;
-        var level = d;
+        var kyParent = ky;
+		var level = d;
+		
 
 	    xscale.domain([d.x, d.x + d.dx]);
         yscale.domain([d.y, d.y + d.dy]);
@@ -246,7 +248,9 @@
 			var upOffset = 0;//-18;
 			var vHeight = (chartHeight - 20) *d.dy/(d.dy - 18);
 			//ky = vHeight / d.dy;
+			kyParent = chartHeight / d.dy;
 			ky = (chartHeight - 20)/(d.dy - 18);
+			
 			
 			console.log("scale2:zoomIn");
 			yscale0 = d3.scale.linear().domain([d.y,d.y+d.dy]).range([0,chartHeight]);
@@ -269,7 +273,7 @@
                 var realdy = yscale0(d.y);
                 if(d.type == "elm"){
 					var temp = (d.y - d.parent.y);
-					console.log("elm:" + d.name +",(d.y - d.parent.y)=" + temp +",x,y:" + d.x + "," + realdy);
+					//console.log("elm:" + d.name +",(d.y - d.parent.y)=" + temp +",x,y:" + d.x + "," + realdy);
 					if(!zoomIn)
 						realdy = (d.y - d.parent.y) < 15? yscale1(d.y):yscale2(d.y);
 					else
@@ -307,7 +311,7 @@
                 return Math.max(0.01, kx * d.dx);
             })
             .attr("height", function(d) {
-                return d.children ? (ky*d.dy*1.3) : Math.max(0.01, ky * d.dy);
+                return d.children ? (ky*d.dy) : Math.max(0.01, ky * d.dy);
             })
             .select(".labelbody .label")
             .text(function(d) {
@@ -368,7 +372,7 @@
                 return Math.max(0.01, kx * d.dx);
             })
             .attr("height", function(d) {
-                return d.children ? (ky*d.dy) : Math.max(0.01, ky * d.dy);
+                return d.children ? (kyParent*d.dy) : Math.max(0.01, ky * d.dy);
             })
             .style("fill", function(d) {
                 //return d.children ? color2(d.name) : d.type == "cls"? "#ddd":d.type == "grp" ? "#04a" : color(d.change.slice(0,-1));
